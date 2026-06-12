@@ -28,7 +28,7 @@ Un sitio web con:
  
 | # | Funcionalidad | Descripción |
 |---|---|---|
-| 🗺️ | **Mapa interactivo** | Puntos de donación de ropa en Bs. As. |
+| 🗺️ | **Mapa interactivo** | Puntos de donación de ropa, talleres y ferias en Bs. As. |
 | 💬 | **Foro comunitario** | Espacio para compartir tips y tutoriales de reutilización |
 | 🤝 | **Directorio** | Personas que reparan o transforman ropa |
  
