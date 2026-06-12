@@ -1,35 +1,46 @@
-## Grupo A/B - Equipo {numero}
-_Curso de Programación Asistida con IA - Chicas en Tecnología_ 🚀
+# 🌿 EcoTrama — Moda Consciente, Comunidad que Transforma
+ 
+## 🧵 El Problema
+ 
+El fast fashion genera una producción masiva y acelerada de ropa que resulta en toneladas de tela y prendas desperdiciadas. Las personas compran más de lo que necesitan y descartan ropa en buen estado, contaminando el medioambiente.
+ 
+> El modelo de consumo se basa en un ciclo simple pero dañino: **comprar → usar → descartar.**
+ 
+---
+ 
+## 👥 Público Objetivo
+ 
+Personas de entre **15 y 40 años de Buenos Aires** que quieren reducir su impacto ambiental y necesitan herramientas concretas para donar, reutilizar o intercambiar ropa de forma fácil, pero no saben por dónde empezar.
+ 
+---
+ 
+## 💡 La Solución
+ 
+EcoTrama es una **plataforma colaborativa web** que conecta personas y emprendedores de Buenos Aires para extender la vida útil de las prendas. Fomentamos hábitos de consumo más responsables a través de herramientas concretas y accesibles.
+ 
+Un sitio web con:
+- 🗺️ Un mapa de puntos de donación
+- 💬 Un foro de tips y tutoriales para reutilizar ropa
+- 🤝 Un espacio para conectar con personas que reparan o transforman prendas
+---
+ 
+## ⚙️ Funcionalidades Clave
+ 
+| # | Funcionalidad | Descripción |
+|---|---|---|
+| 🗺️ | **Mapa interactivo** | Puntos de donación de ropa en Bs. As. |
+| 💬 | **Foro comunitario** | Espacio para compartir tips y tutoriales de reutilización |
+| 🤝 | **Directorio** | Personas que reparan o transforman ropa |
+ 
+---
+ 
+## 🌍 Objetivos de Desarrollo Sostenible
+ 
+Este proyecto se alinea con los siguientes ODS de la ONU:
+ 
+| ODS | Relación con el proyecto |
+|---|---|
+| **12** — Producción y consumo responsables | Promovemos alternativas concretas al ciclo de comprar, usar y descartar |
+| **13** — Acción por el clima |Ayudamos a extender la vida útil de las prendas para reducir la demanda de nueva producción textil y su impacto ambiental |
 
-```⚠️ Dejar la opción correcta entre Grupo A (Grupo de 17 a 19hs) y Grupo B (Grupo de 19 a 21hs) y agregar el número de equipo ⚠️```
-
-En este repositorio, se presenta el sitio web realizado durante el curso de programación frontend de CET.
-
-### 📄 Entregas
-**Entrega #1**: planificación de la solución y primeros resultados que obtengamos con la IA:
-
-📝 Edición del Archivo README incluyendo:
-- Definición de la problemática que eligieron abordar
-- Relación con los *Objetivos de Desarrollo Sostenible (ODS)*[^1]
-- Explicación de la solución tecnológica que están desarrollando
-> [!TIP]
-> Aprovechen los [formatos del README](https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) para escribir diferentes secciones
-
-🎨 Moodboard
-
-🧩 Archivos generados con asistencia de IA: ```index.html```, ```style.css```, ```script.js```
-
-
-**Entrega #2 (Final)**: se esperan modificaciones en el código respecto a la entrega anterior, que pueden incluir nuevos archivos o extensión de los existentes (debe haber al menos un archivo de cada lenguaje visto - HTML, CSS y Javascript)
-
-💡 Es una buena idea llevar un registro de lo que cambiamos. Por ejemplo
-```
-- Agregamos Bootstrap para el carrousel de imágenes...
-- Modificamos el texto de la sección de bienvenida...
-- Transformamos los textos sobre redes sociales en links...
-```
-
-Ahora si, ¡A programar! 🚀
-
-
-[^1]: Los Objetivos de Desarrollo Sostenible u Objetivos Globales, también conocidos como Agenda 2030, son 17 objetivos globales interconectados diseñados para ser un «plan para lograr un futuro mejor y más sostenible para todos». Más información en https://www.un.org/sustainabledevelopment/es/objetivos-de-desarrollo-sostenible/
+---
