@@ -120,7 +120,7 @@ nav.scrolled .btn-nav { background: var(--jungle); }
 ══════════════════════════════════════ */
 .hero-carousel {
   position: relative;
-  height: 100vh; min-height: 600px;
+  height: 100vh; min-height: 500px;
   overflow: hidden;
   display: flex; align-items: center; justify-content: center;
 }
@@ -371,7 +371,7 @@ footer a { color: rgba(250,246,238,.6); text-decoration: none; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
 
-  .hero-carousel { height: 100svh; }
+  .hero-carousel { height: 70svh; }
   .hero-title { font-size: clamp(2rem, 9vw, 2.8rem); }
   .hero-sub { font-size: .95rem; }
   .carousel-arrow { width: 38px; height: 38px; font-size: .9rem; }
@@ -382,4 +382,314 @@ footer a { color: rgba(250,246,238,.6); text-decoration: none; }
   .section-info { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.5rem; }
   .info-visual { display: none; }
   .section-msg { padding: 3.5rem 1.5rem; }
+}
+
+/* ══════════════════════════════════════════
+   SLIDES CON COLLAGE — texto animado + hover
+   ══════════════════════════════════════════ */
+
+/* Fondo con zoom suave al hacer hover */
+.slide-bg-zoom {
+  transition: transform 0.6s ease;
+}
+.carousel-slide:hover .slide-bg-zoom {
+  transform: scale(1.05);
+}
+
+/* Contenido animado encima del collage */
+.slide-content-animado {
+  position: absolute;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: entradaDesdeAbajo 0.7s ease both;
+}
+
+@keyframes entradaDesdeAbajo {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-emoji-grande {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+
+.slide-titulo {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  letter-spacing: 0.02em;
+}
+
+.slide-descripcion {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  opacity: 0.92;
+  margin: 0.2rem 0 0.8rem;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* Botón que pulsa suavemente */
+.slide-boton-pulso {
+  background: white;
+  color: #7a6faf;
+  padding: 0.65rem 1.8rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  animation: pulso 2s ease-in-out infinite;
+  transition: transform 0.2s, background 0.2s;
+}
+.slide-boton-pulso:hover {
+  transform: scale(1.08);
+  background: #f0ecff;
+}
+
+@keyframes pulso {
+  0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  50%       { box-shadow: 0 4px 25px rgba(148,178,237,0.6); }
+}
+
+/* ══════════════════════════════════════════
+   SLIDES CON COLLAGE — texto animado + hover
+   ══════════════════════════════════════════ */
+
+.slide-con-collage {
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-bg-zoom {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+.carousel-slide:hover .slide-bg-zoom {
+  transform: scale(1.05);
+}
+
+.slide-content-animado {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+  animation: entradaDesdeAbajo 0.7s ease both;
+}
+
+@keyframes entradaDesdeAbajo {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-emoji-grande {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  margin-bottom: 0.3rem;
+}
+
+.slide-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+
+.slide-descripcion {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  opacity: 0.92;
+  margin: 0.5rem 0 1rem;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+.slide-boton-pulso {
+  background: white;
+  color: #7a6faf;
+  padding: 0.65rem 1.8rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  animation: pulso 2s ease-in-out infinite;
+  transition: transform 0.2s, background 0.2s;
+}
+.slide-boton-pulso:hover {
+  transform: scale(1.08);
+  background: #f0ecff;
+}
+
+@keyframes pulso {
+  0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  50%       { box-shadow: 0 4px 28px rgba(148,178,237,0.7); }
+}
+
+/* ══════════════════════════════════════════
+   HERO TEXT SEPARADO — debajo del carrusel
+   ══════════════════════════════════════════ */
+
+.hero-content-separado {
+  background: #FAF6EE;
+  text-align: center;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-content-separado .hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(101,97,63,.08);
+  border: 1px solid rgba(101,97,63,.18);
+  border-radius: 99px;
+  padding: .35rem 1rem;
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #65613F;
+}
+
+.hero-content-separado .hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  color: #3a3820;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.hero-content-separado .hero-title em {
+  font-style: italic;
+  color: #D88AAE;
+}
+
+.hero-content-separado .hero-sub {
+  color: #6b6445;
+  font-size: clamp(.95rem, 2vw, 1.15rem);
+  max-width: 560px;
+  margin: 0;
+}
+
+.hero-content-separado .hero-btns {
+  display: flex;
+  gap: .8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: .5rem;
+}
+
+/* ══════════════════════════════════════════
+   SLIDES CON COLLAGE — texto animado + hover
+   ══════════════════════════════════════════ */
+
+/* El carrusel necesita position relative para el canvas */
+.hero-carousel { position: relative; overflow: hidden; }
+
+/* Slides apilados para fade */
+.carousel-track { position: relative; width: 100%; height: 100%; }
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide-con-collage { position: relative; }
+
+.slide-bg-zoom {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+.carousel-slide:hover .slide-bg-zoom {
+  transform: scale(1.05);
+}
+
+.slide-content-animado {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+  animation: entradaDesdeAbajo 0.7s ease both;
+}
+
+@keyframes entradaDesdeAbajo {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-emoji-grande {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  margin-bottom: 0.3rem;
+}
+
+.slide-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+
+.slide-descripcion {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  opacity: 0.92;
+  margin: 0.5rem 0 1rem;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+.slide-boton-pulso {
+  background: white;
+  color: #7a6faf;
+  padding: 0.65rem 1.8rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  animation: pulso 2s ease-in-out infinite;
+  transition: transform 0.2s, background 0.2s;
+  position: relative;
+  z-index: 20;
+}
+.slide-boton-pulso:hover {
+  transform: scale(1.08);
+  background: #f0ecff;
+}
+
+@keyframes pulso {
+  0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  50%       { box-shadow: 0 4px 28px rgba(148,178,237,0.7); }
 }

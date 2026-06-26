@@ -5,100 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EcoTrama · moda consciente, comunidad que transforma</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <!-- Leaflet CSS para el mapa -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <link rel="stylesheet" href="styles.css"/>
   <style>
-    /* ── Estilos del mapa ── */
-    .section-mapa {
-      padding: 5rem 1.5rem;
-      background: #FAF6EE;
-    }
-    .mapa-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .mapa-inner h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      color: #3a3820;
-      margin-bottom: .5rem;
-    }
-    .mapa-inner > p {
-      color: #6b6445;
-      margin-bottom: 1.5rem;
-    }
-    .mapa-filtros {
-      display: flex;
-      gap: .6rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.2rem;
-    }
-    .mapa-filtro {
-      padding: .4rem 1rem;
-      border-radius: 99px;
-      border: 1.5px solid #c8bf9e;
-      background: #fff;
-      color: #65613F;
-      font-size: .85rem;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .mapa-filtro.active,
-    .mapa-filtro:hover {
-      background: #65613F;
-      color: #FAF6EE;
-      border-color: #65613F;
-    }
-    #mapa-container {
-      width: 100%;
-      height: 420px;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(101,97,63,.15);
-    }
-    /* Marcadores del mapa */
-    .marker-bubble {
-      width: 38px;
-      height: 38px;
-      background: #fff;
-      border: 2.5px solid #65613F;
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,.18);
-    }
-    .marker-bubble span {
-      transform: rotate(45deg);
-    }
+    .section-mapa { padding: 5rem 1.5rem; background: #FAF6EE; }
+    .mapa-inner { max-width: 1100px; margin: 0 auto; }
+    .mapa-inner h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); color: #3a3820; margin-bottom: .5rem; }
+    .mapa-inner > p { color: #6b6445; margin-bottom: 1.5rem; }
+    .mapa-filtros { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .mapa-filtro { padding: .4rem 1rem; border-radius: 99px; border: 1.5px solid #c8bf9e; background: #fff; color: #65613F; font-size: .85rem; cursor: pointer; transition: all .2s; }
+    .mapa-filtro.active, .mapa-filtro:hover { background: #65613F; color: #FAF6EE; border-color: #65613F; }
+    #mapa-container { width: 100%; height: 420px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(101,97,63,.15); }
+    .marker-bubble { width: 38px; height: 38px; background: #fff; border: 2.5px solid #65613F; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+    .marker-bubble span { transform: rotate(45deg); }
     .mapa-popup { min-width: 160px; }
     .popup-header { font-weight: 600; margin-bottom: .3rem; color: #3a3820; }
-    .popup-horario {
-      display: inline-block;
-      margin-top: .4rem;
-      font-size: .78rem;
-      background: #DAE097;
-      padding: .15rem .5rem;
-      border-radius: 99px;
-      color: #3a3820;
-    }
-    .mapa-leyenda {
-      display: flex;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-      font-size: .82rem;
-      color: #6b6445;
-    }
+    .popup-horario { display: inline-block; margin-top: .4rem; font-size: .78rem; background: #DAE097; padding: .15rem .5rem; border-radius: 99px; color: #3a3820; }
+    .mapa-leyenda { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 1rem; font-size: .82rem; color: #6b6445; }
     .mapa-leyenda span { display: flex; align-items: center; gap: .3rem; }
   </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
+<!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="#">EcoTrama <span>✦</span></a>
   <ul class="nav-links">
@@ -125,61 +54,83 @@
   <a href="#" class="btn-nav-m" onclick="toggleMenu(); abrirRegistro(); return false;">Registrate</a>
 </div>
 
-
-<!-- ═══ HERO + CARRUSEL INTEGRADO ═══ -->
+<!-- HERO + CARRUSEL -->
 <section class="hero-carousel" id="inicio">
 
-  <!-- Nota: A partir de aquí se pueden cambiar las imágenes del carrusel.
-       Modificar o reemplazar los elementos <div class="carousel-slide"> dentro
-       de la <div id="carouselTrack">. Cada slide usa un bloque con clase
-       "slide-bg-css" donde se define el fondo (puede ser imagen o gradient).
-       Ejemplo: <div class="slide-bg-css" style="background-image:url('ruta/imagen.jpg');"></div> -->
+  <canvas id="particulas" style="position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;"></canvas>
 
-  <!-- Fondo: slides del carrusel -->
   <div class="carousel-track" id="carouselTrack">
 
     <!-- SLIDE 1: Foro -->
-    <div class="carousel-slide" id="foro">
-      <div class="slide-bg-css" style="background: linear-gradient(135deg, #8D8B4C 0%, #D88AAE 50%, #FAF6EE 100%);">💬</div>
+    <div class="carousel-slide slide-con-collage" id="foro">
+      <div class="slide-bg-css slide-bg-zoom" style="background-image: url('img/collage-foro.png'); background-size: cover; background-position: center;"></div>
       <div class="slide-overlay"></div>
+      <div class="slide-content-animado">
+        <div class="slide-emoji-grande">💬</div>
+        <h2 class="slide-titulo">Foro Comunitario</h2>
+        <p class="slide-descripcion">Compartí ideas, patrones y tutoriales</p>
+        <a href="#mensaje" class="slide-boton-pulso">Ver foro →</a>
+      </div>
       <div class="slide-label">Foro comunitario</div>
     </div>
 
     <!-- SLIDE 2: Doná -->
-    <div class="carousel-slide" id="dona">
-      <div class="slide-bg-css" style="background: linear-gradient(135deg, #65613F 0%, #DAE097 50%, #F7D0D5 100%);">🧺</div>
+    <div class="carousel-slide slide-con-collage" id="dona">
+      <div class="slide-bg-css slide-bg-zoom" style="background: linear-gradient(135deg, #65613F 0%, #DAE097 50%, #F7D0D5 100%);"></div>
       <div class="slide-overlay"></div>
+      <div class="slide-content-animado">
+        <div class="slide-emoji-grande">🧺</div>
+        <h2 class="slide-titulo">Doná tu Ropa</h2>
+        <p class="slide-descripcion">Dale una segunda vida a lo que ya no usás</p>
+        <a href="#dona" class="slide-boton-pulso">Donar ahora →</a>
+      </div>
       <div class="slide-label">Doná tu ropa</div>
     </div>
 
     <!-- SLIDE 3: Directorio -->
-    <div class="carousel-slide" id="directorio">
-      <div class="slide-bg-css" style="background: linear-gradient(135deg, #94B2ED 0%, #AFB8CD 50%, #FAF6EE 100%);">🪡</div>
+    <div class="carousel-slide slide-con-collage" id="directorio">
+      <div class="slide-bg-css slide-bg-zoom" style="background-image: url('img/collage-modistas.png'); background-size: cover; background-position: center;"></div>
       <div class="slide-overlay"></div>
+      <div class="slide-content-animado">
+        <div class="slide-emoji-grande">🪡</div>
+        <h2 class="slide-titulo">Directorio de Modistas</h2>
+        <p class="slide-descripcion">Encontrá a tu modista ideal cerca de vos</p>
+        <a href="#directorio-seccion" class="slide-boton-pulso">Ver modistas →</a>
+      </div>
       <div class="slide-label">Directorio de modistas</div>
     </div>
 
     <!-- SLIDE 4: Registro -->
-    <div class="carousel-slide" id="registro">
-      <div class="slide-bg-css" style="background: linear-gradient(135deg, #893941 0%, #F8B553 50%, #F7D0D5 100%);">🌸</div>
+    <div class="carousel-slide slide-con-collage" id="registro">
+      <div class="slide-bg-css slide-bg-zoom" style="background-image: url('img/collage-comunidad.png'); background-size: cover; background-position: center;"></div>
       <div class="slide-overlay"></div>
+      <div class="slide-content-animado">
+        <div class="slide-emoji-grande">🌸</div>
+        <h2 class="slide-titulo">Unite a la Comunidad</h2>
+        <p class="slide-descripcion">Sumate a un movimiento consciente y sostenible</p>
+        <a href="#" class="slide-boton-pulso" onclick="abrirRegistro(); return false;">Registrate →</a>
+      </div>
       <div class="slide-label">Unite a la comunidad</div>
     </div>
 
     <!-- SLIDE 5: Sobre nosotras -->
-    <div class="carousel-slide" id="sobre">
-      <div class="slide-bg-css" style="background: linear-gradient(135deg, #65613F 0%, #8D8B4C 50%, #DAE097 100%);">🌿</div>
+    <div class="carousel-slide slide-con-collage" id="sobre">
+      <div class="slide-bg-css slide-bg-zoom" style="background: linear-gradient(135deg, #65613F 0%, #8D8B4C 50%, #DAE097 100%);"></div>
       <div class="slide-overlay"></div>
+      <div class="slide-content-animado">
+        <div class="slide-emoji-grande">🌿</div>
+        <h2 class="slide-titulo">Sobre Nosotras</h2>
+        <p class="slide-descripcion">Conocé quiénes somos y por qué hacemos esto</p>
+        <a href="#sobre" class="slide-boton-pulso">Conocernos →</a>
+      </div>
       <div class="slide-label">Sobre nosotras</div>
     </div>
 
   </div><!-- /track -->
 
-  <!-- Flechas -->
   <button class="carousel-arrow arrow-prev" onclick="moveCarousel(-1)">←</button>
   <button class="carousel-arrow arrow-next" onclick="moveCarousel(1)">→</button>
 
-  <!-- Dots -->
   <div class="carousel-dots" id="carouselDots">
     <button class="dot active" onclick="goToSlide(0)"></button>
     <button class="dot" onclick="goToSlide(1)"></button>
@@ -188,34 +139,12 @@
     <button class="dot" onclick="goToSlide(4)"></button>
   </div>
 
-  <!-- Scroll hint -->
   <div class="scroll-hint">↓ Explorá</div>
-
-  <!-- Texto central flotando sobre el carrusel -->
-  <div class="hero-content">
-    <div class="hero-badge">🌱 moda consciente · comunidad que transforma</div>
-
-    <h1 class="hero-title">
-      Tu ropa tiene<br>
-      <em>muchas historias</em><br>
-      por contar
-    </h1>
-
-    <p class="hero-sub">
-      Reutilizá, doná, intercambiá y transformá. Construimos juntas una comunidad más consciente y sostenible.
-    </p>
-
-    <div class="hero-btns">
-      <a href="#dona" class="btn btn-primary">🧺 Doná ropa</a>
-      <a href="#mapa" class="btn btn-map">🗺️ Explorá el mapa</a>
-      <a href="#" class="btn btn-secondary" onclick="abrirRegistro(); return false;">Sumate →</a>
-    </div>
-  </div>
 
 </section>
 
 
-<!-- ═══ SECCIÓN INFO ═══ -->
+<!-- SECCIÓN INFO -->
 <section>
   <div class="section-info">
     <div class="info-text reveal">
@@ -229,49 +158,27 @@
       </ul>
     </div>
     <div class="info-visual">
-      <div class="info-card reveal">
-        <div class="info-card-icon">🧺</div>
-        <h4>Doná</h4>
-        <p>Dale una segunda vida a lo que ya no usás</p>
-      </div>
-      <div class="info-card reveal">
-        <div class="info-card-icon">🔄</div>
-        <h4>Intercambiá</h4>
-        <p>Cambiá lo que no te ponés por lo que sí querés</p>
-      </div>
-      <div class="info-card reveal">
-        <div class="info-card-icon">🪡</div>
-        <h4>Repará</h4>
-        <p>Alargá la vida útil de tus prendas</p>
-      </div>
-      <div class="info-card reveal">
-        <div class="info-card-icon">🌍</div>
-        <h4>Transformá</h4>
-        <p>Creá algo nuevo con telas y retazos</p>
-      </div>
+      <div class="info-card reveal"><div class="info-card-icon">🧺</div><h4>Doná</h4><p>Dale una segunda vida a lo que ya no usás</p></div>
+      <div class="info-card reveal"><div class="info-card-icon">🔄</div><h4>Intercambiá</h4><p>Cambiá lo que no te ponés por lo que sí querés</p></div>
+      <div class="info-card reveal"><div class="info-card-icon">🪡</div><h4>Repará</h4><p>Alargá la vida útil de tus prendas</p></div>
+      <div class="info-card reveal"><div class="info-card-icon">🌍</div><h4>Transformá</h4><p>Creá algo nuevo con telas y retazos</p></div>
     </div>
   </div>
 </section>
 
 
-<!-- ═══ SECCIÓN MAPA ═══ -->
+<!-- SECCIÓN MAPA -->
 <section class="section-mapa" id="mapa">
   <div class="mapa-inner">
     <h2 class="reveal">🗺️ Mapa de la comunidad</h2>
     <p class="reveal">Encontrá puntos de donación, modistas y ferias de intercambio cerca tuyo en Buenos Aires.</p>
-
-    <!-- Filtros -->
     <div class="mapa-filtros">
       <button class="mapa-filtro active" data-cat="todos">✨ Todos</button>
       <button class="mapa-filtro" data-cat="donacion">🧺 Donaciones</button>
       <button class="mapa-filtro" data-cat="modista">🪡 Modistas</button>
       <button class="mapa-filtro" data-cat="intercambio">🔄 Intercambio</button>
     </div>
-
-    <!-- Contenedor del mapa -->
     <div id="mapa-container"></div>
-
-    <!-- Leyenda -->
     <div class="mapa-leyenda">
       <span>🧺 Punto de donación</span>
       <span>🪡 Modista / taller</span>
@@ -281,21 +188,15 @@
 </section>
 
 
-<!-- ═══ FORMULARIO ═══ -->
+<!-- FORMULARIO -->
 <section class="section-msg" id="mensaje">
   <div class="msg-inner">
     <h2 class="reveal">Dejá tu mensaje 🌸</h2>
     <p class="reveal">Compartí un tip, contanos tu experiencia o simplemente saludá. Cada voz suma para construir esta comunidad.</p>
     <div class="form-box reveal">
       <div id="form-content">
-        <div class="field">
-          <label for="nombre">Tu nombre</label>
-          <input type="text" id="nombre" placeholder="¿Cómo te llamás?"/>
-        </div>
-        <div class="field">
-          <label for="comentario">Tu mensaje</label>
-          <textarea id="comentario" placeholder="Compartí un tip, una experiencia o una pregunta..."></textarea>
-        </div>
+        <div class="field"><label for="nombre">Tu nombre</label><input type="text" id="nombre" placeholder="¿Cómo te llamás?"/></div>
+        <div class="field"><label for="comentario">Tu mensaje</label><textarea id="comentario" placeholder="Compartí un tip, una experiencia o una pregunta..."></textarea></div>
         <button class="btn-enviar" onclick="enviar()">Enviar mensaje 🌿</button>
       </div>
       <div class="form-thanks" id="form-thanks">
@@ -308,7 +209,7 @@
 </section>
 
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-logo">EcoTrama ✦</div>
   <p>moda consciente · comunidad que transforma · Buenos Aires</p>
@@ -318,7 +219,7 @@
 </footer>
 
 
-<!-- ═══ MODAL REGISTRO ═══ -->
+<!-- MODAL REGISTRO -->
 <div class="modal-overlay" id="modal-registro">
   <div class="modal-box">
     <button class="modal-close" onclick="cerrarRegistro()">✕</button>
@@ -326,29 +227,23 @@
       <div class="modal-icon">🌸</div>
       <h2>Sumate a EcoTrama</h2>
       <p>Creá tu cuenta y empezá a ser parte de la comunidad.</p>
-      <div class="field">
-        <label for="reg-nombre">Nombre</label>
-        <input type="text" id="reg-nombre" placeholder="¿Cómo te llamás?"/>
-      </div>
-      <div class="field">
-        <label for="reg-email">Correo electrónico</label>
-        <input type="email" id="reg-email" placeholder="tu@correo.com"/>
-      </div>
-      <div class="field">
-        <label for="reg-password">Contraseña</label>
-        <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres"/>
-      </div>
+      <div class="field"><label for="reg-nombre">Nombre</label><input type="text" id="reg-nombre" placeholder="¿Cómo te llamás?"/></div>
+      <div class="field"><label for="reg-email">Correo electrónico</label><input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="off"/></div>
+      <div class="field"><label for="reg-password">Contraseña</label><input type="password" id="reg-password" placeholder="Mínimo 6 caracteres"/></div>
       <p class="reg-error" id="reg-error"></p>
       <button class="btn-enviar" onclick="registrar()">Crear cuenta 🌿</button>
     </div>
     <div id="reg-thanks" style="display:none; flex-direction:column; align-items:center; text-align:center; padding:1rem 0;">
-      <div class="ty-icon">🌱</div>
-      <h4 style="font-family:Playfair Display,serif;font-size:1.4rem;color:#3a3820;margin:.6rem 0 .4rem;">¡Bienvenida, <span id="reg-thanks-name"></span>!</h4>
-      <p style="color:#6b6445;font-size:.92rem;">Tu cuenta fue creada. Ya sos parte de la comunidad EcoTrama.</p>
-      <button class="btn-enviar" onclick="cerrarRegistro()" style="margin-top:1.2rem;">Explorar →</button>
+      <div>
+        <div class="ty-icon">🌱</div>
+        <h4 style="font-family:Playfair Display,serif;font-size:1.4rem;color:#3a3820;margin:.6rem 0 .4rem;">¡Bienvenida, <span id="reg-thanks-name"></span>!</h4>
+        <p style="color:#6b6445;font-size:.92rem;">Tu cuenta fue creada. Ya sos parte de la comunidad EcoTrama.</p>
+        <button class="btn-enviar" onclick="cerrarRegistro()" style="margin-top:1.2rem;">Explorar →</button>
+      </div>
     </div>
   </div>
 </div>
+
 <style>
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(58,56,32,.55); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center; padding:1rem; }
   .modal-overlay.open { display:flex; }
@@ -362,9 +257,63 @@
   .reg-error { color:#893941; font-size:.85rem; min-height:1.1rem; margin-bottom:.5rem; }
 </style>
 
-<!-- ═══ SCRIPTS ═══ -->
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="script.js"></script>
+<!-- SCRIPTS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/form.js"></script>
+<script src="js/mapa.js"></script>
+<script src="js/registro.js"></script>
+
+<!-- Partículas flotantes del carrusel -->
+<script>
+(function() {
+  const canvas = document.getElementById('particulas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particulas = [];
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 55; i++) {
+    particulas.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2.5 + 0.5,
+      dx: (Math.random() - 0.5) * 0.4,
+      dy: -Math.random() * 0.5 - 0.2,
+      alpha: Math.random() * 0.5 + 0.2,
+      color: ['255,220,230','218,224,151','175,184,205','248,181,83','255,255,255'][Math.floor(Math.random()*5)]
+    });
+  }
+
+  function animar() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particulas.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      p.alpha += (Math.random() - 0.5) * 0.02;
+      p.alpha = Math.max(0.1, Math.min(0.7, p.alpha));
+      if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
+      if (p.x < -5) p.x = canvas.width + 5;
+      if (p.x > canvas.width + 5) p.x = -5;
+    });
+    requestAnimationFrame(animar);
+  }
+  animar();
+})();
+</script>
+
+
 
 </body>
 </html>
