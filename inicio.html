@@ -36,7 +36,7 @@
     <li><a href="#dona">Doná</a></li>
     <li><a href="#mapa">Mapa</a></li>
     <li><a href="#directorio">Directorio</a></li>
-    <li><a href="#sobre">Sobre nosotras</a></li>
+    <li><a href="sobre.html" target="_blank">Sobre nosotras</a></li>
     <li><a href="#" class="btn-nav" onclick="abrirRegistro(); return false;">Registrate</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
@@ -50,15 +50,17 @@
   <a href="#dona" onclick="toggleMenu()">Doná</a>
   <a href="#mapa" onclick="toggleMenu()">Mapa</a>
   <a href="#directorio" onclick="toggleMenu()">Directorio</a>
-  <a href="#sobre" onclick="toggleMenu()">Sobre nosotras</a>
+  <a href="sobre.html" target="_blank" onclick="toggleMenu()">Sobre nosotras</a>
   <a href="#" class="btn-nav-m" onclick="toggleMenu(); abrirRegistro(); return false;">Registrate</a>
 </div>
 
 <!-- HERO + CARRUSEL -->
 <section class="hero-carousel" id="inicio">
 
+  <!-- Canvas de partículas flotantes -->
   <canvas id="particulas" style="position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;"></canvas>
 
+  <!-- Slides -->
   <div class="carousel-track" id="carouselTrack">
 
     <!-- SLIDE 1: Foro -->
@@ -121,16 +123,18 @@
         <div class="slide-emoji-grande">🌿</div>
         <h2 class="slide-titulo">Sobre Nosotras</h2>
         <p class="slide-descripcion">Conocé quiénes somos y por qué hacemos esto</p>
-        <a href="#sobre" class="slide-boton-pulso">Conocernos →</a>
+        <a href="sobre.html" class="slide-boton-pulso">Conocernos →</a>
       </div>
       <div class="slide-label">Sobre nosotras</div>
     </div>
 
   </div><!-- /track -->
 
+  <!-- Flechas -->
   <button class="carousel-arrow arrow-prev" onclick="moveCarousel(-1)">←</button>
   <button class="carousel-arrow arrow-next" onclick="moveCarousel(1)">→</button>
 
+  <!-- Dots -->
   <div class="carousel-dots" id="carouselDots">
     <button class="dot active" onclick="goToSlide(0)"></button>
     <button class="dot" onclick="goToSlide(1)"></button>
@@ -214,7 +218,7 @@
   <div class="footer-logo">EcoTrama ✦</div>
   <p>moda consciente · comunidad que transforma · Buenos Aires</p>
   <p style="margin-top:.5rem; font-size:.78rem;">
-    <a href="#foro">Foro</a> · <a href="#dona">Doná</a> · <a href="#mapa">Mapa</a> · <a href="#directorio">Directorio</a> · <a href="#sobre">Sobre nosotras</a>
+    <a href="#foro">Foro</a> · <a href="#dona">Doná</a> · <a href="#mapa">Mapa</a> · <a href="#directorio">Directorio</a> · <a href="sobre.html">Sobre nosotras</a>
   </p>
 </footer>
 
@@ -228,22 +232,19 @@
       <h2>Sumate a EcoTrama</h2>
       <p>Creá tu cuenta y empezá a ser parte de la comunidad.</p>
       <div class="field"><label for="reg-nombre">Nombre</label><input type="text" id="reg-nombre" placeholder="¿Cómo te llamás?"/></div>
-      <div class="field"><label for="reg-email">Correo electrónico</label><input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="off"/></div>
+      <div class="field"><label for="reg-email">Correo electrónico</label><input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="off"/>
       <div class="field"><label for="reg-password">Contraseña</label><input type="password" id="reg-password" placeholder="Mínimo 6 caracteres"/></div>
       <p class="reg-error" id="reg-error"></p>
       <button class="btn-enviar" onclick="registrar()">Crear cuenta 🌿</button>
     </div>
     <div id="reg-thanks" style="display:none; flex-direction:column; align-items:center; text-align:center; padding:1rem 0;">
-      <div>
-        <div class="ty-icon">🌱</div>
-        <h4 style="font-family:Playfair Display,serif;font-size:1.4rem;color:#3a3820;margin:.6rem 0 .4rem;">¡Bienvenida, <span id="reg-thanks-name"></span>!</h4>
-        <p style="color:#6b6445;font-size:.92rem;">Tu cuenta fue creada. Ya sos parte de la comunidad EcoTrama.</p>
-        <button class="btn-enviar" onclick="cerrarRegistro()" style="margin-top:1.2rem;">Explorar →</button>
-      </div>
+      <div class="ty-icon">🌱</div>
+      <h4 style="font-family:Playfair Display,serif;font-size:1.4rem;color:#3a3820;margin:.6rem 0 .4rem;">¡Bienvenida, <span id="reg-thanks-name"></span>!</h4>
+      <p style="color:#6b6445;font-size:.92rem;">Tu cuenta fue creada. Ya sos parte de la comunidad EcoTrama.</p>
+      <button class="btn-enviar" onclick="cerrarRegistro()" style="margin-top:1.2rem;">Explorar →</button>
     </div>
   </div>
 </div>
-
 <style>
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(58,56,32,.55); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center; padding:1rem; }
   .modal-overlay.open { display:flex; }
@@ -265,11 +266,10 @@
 <script src="js/mapa.js"></script>
 <script src="js/registro.js"></script>
 
-<!-- Partículas flotantes del carrusel -->
+<!-- Partículas flotantes -->
 <script>
 (function() {
   const canvas = document.getElementById('particulas');
-  if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let particulas = [];
 
@@ -280,6 +280,7 @@
   resize();
   window.addEventListener('resize', resize);
 
+  // Crear partículas
   for (let i = 0; i < 55; i++) {
     particulas.push({
       x: Math.random() * canvas.width,
@@ -288,7 +289,7 @@
       dx: (Math.random() - 0.5) * 0.4,
       dy: -Math.random() * 0.5 - 0.2,
       alpha: Math.random() * 0.5 + 0.2,
-      color: ['255,220,230','218,224,151','175,184,205','248,181,83','255,255,255'][Math.floor(Math.random()*5)]
+      color: ['255,220,230', '218,224,151', '175,184,205', '248,181,83', '255,255,255'][Math.floor(Math.random() * 5)]
     });
   }
 
@@ -299,10 +300,13 @@
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
       ctx.fill();
+
       p.x += p.dx;
       p.y += p.dy;
       p.alpha += (Math.random() - 0.5) * 0.02;
       p.alpha = Math.max(0.1, Math.min(0.7, p.alpha));
+
+      // Reiniciar si sale del canvas
       if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
       if (p.x < -5) p.x = canvas.width + 5;
       if (p.x > canvas.width + 5) p.x = -5;
@@ -312,8 +316,6 @@
   animar();
 })();
 </script>
-
-
 
 </body>
 </html>

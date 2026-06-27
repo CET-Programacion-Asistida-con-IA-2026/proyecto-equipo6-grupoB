@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sobre Nosotras · EcoTrama</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cloud:     #FAF6EE;
+      --cacao:     #3a3820;
+      --oliva:     #65613F;
+      --peony:     #D88AAE;
+      --pistacho:  #DAE097;
+      --sky:       #AFB8CD;
+      --durazno:   #F7D0D5;
+      --naranja:   #F8B553;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cloud);
+      color: var(--cacao);
+      line-height: 1.7;
+    }
+
+    /* ── Barra de navegacion ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(250,246,238,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(101,97,63,0.1);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cacao);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
+    .nav-logo span { color: var(--peony); }
+    .btn-volver {
+      background: var(--cacao);
+      color: var(--cloud);
+      padding: .45rem 1.2rem;
+      border-radius: 99px;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      transition: background .2s;
+    }
+    .btn-volver:hover { background: var(--oliva); }
+
+    /* ── Sección Principal ── */
+    .hero {
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      background: linear-gradient(160deg, var(--durazno) 0%, var(--cloud) 50%, var(--pistacho) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(216,138,174,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 30%, rgba(218,224,151,0.2) 0%, transparent 60%);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(101,97,63,.08);
+      border: 1px solid rgba(101,97,63,.2);
+      border-radius: 99px;
+      padding: .3rem .9rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--oliva);
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 1.1;
+      color: var(--cacao);
+      position: relative;
+      margin-bottom: .8rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--peony);
+    }
+    .hero-sub {
+      font-size: clamp(.95rem, 2vw, 1.1rem);
+      color: var(--oliva);
+      max-width: 500px;
+      position: relative;
+    }
+
+    /* ── SECCIONES ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Quiénes somos */
+    .seccion-quienes {
+      padding: 5rem 1.5rem;
+      background: var(--cloud);
+    }
+    .quienes-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .seccion-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--peony);
+      margin-bottom: .8rem;
+    }
+    .seccion-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--cacao);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+    .seccion-texto {
+      color: #6b6445;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .seccion-texto p + p { margin-top: 1rem; }
+
+    /* Tarjetas */
+    .deco-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(58,56,32,.08);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transform: rotate(1.5deg);
+    }
+    .deco-card-icon { font-size: 2.5rem; }
+    .deco-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--cacao);
+    }
+    .deco-card p { font-size: .9rem; color: #6b6445; }
+    .deco-tag {
+      display: inline-block;
+      background: var(--pistacho);
+      color: var(--oliva);
+      font-size: .75rem;
+      font-weight: 600;
+      padding: .25rem .7rem;
+      border-radius: 99px;
+      width: fit-content;
+    }
+
+    /* Info/Links */
+    .seccion-problema {
+      padding: 5rem 1.5rem;
+      background: var(--cacao);
+      color: var(--cloud);
+    }
+    .problema-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .problema-inner .seccion-label { color: var(--pistacho); }
+    .problema-inner .seccion-titulo { color: var(--cloud); }
+
+    .datos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+    }
+    .dato-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 1.4rem;
+      transition: background .2s;
+    }
+    .dato-card:hover { background: rgba(255,255,255,.1); }
+    .dato-emoji { font-size: 1.8rem; margin-bottom: .6rem; }
+    .dato-texto {
+      font-size: .88rem;
+      color: rgba(250,246,238,.8);
+      line-height: 1.6;
+    }
+    .dato-fuente {
+      font-size: .72rem;
+      color: rgba(250,246,238,.4);
+      margin-top: .5rem;
+      font-style: italic;
+    }
+    .dato-fuente a {
+  color: rgba(250,246,238,.5);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(218,224,151,.3);
+  padding-bottom: 1px;
+  transition: color .2s, border-color .2s;
+}
+
+.dato-fuente a:hover {
+  color: var(--pistacho);
+  border-bottom-color: var(--pistacho);
+}
+
+    /* Què proponemos */
+    .seccion-propuesta {
+      padding: 5rem 1.5rem;
+      background: linear-gradient(135deg, var(--durazno) 0%, var(--cloud) 100%);
+    }
+    .propuesta-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .frase-grande {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      color: var(--cacao);
+      line-height: 1.3;
+      margin: 2rem 0;
+    }
+    .frase-grande em { color: var(--peony); font-style: italic; }
+
+    .propuesta-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .prop-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(58,56,32,.07);
+      transition: transform .25s, background .25s, box-shadow .25s;
+    }
+    .prop-card:hover {
+        transform: translateY(-6px);
+        background: var(--pistacho);
+        box-shadow: 0 8px 24px rgba(58,56,32,.12);
+    }
+    .prop-card:hover h4 { color: var(--oliva); }
+    .prop-card:hover p { color: var(--oliva); }
+    
+    .prop-card p { font-size: .82rem; color: #6b6445; }
+
+    /* CET */
+    .seccion-cet {
+      padding: 4rem 1.5rem;
+      background: var(--cloud);
+      border-top: 1px solid rgba(101,97,63,.1);
+    }
+    .cet-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .cet-badge {
+      background: var(--cacao);
+      color: var(--cloud);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      min-width: 180px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .cet-badge span { display: block; font-size: 2rem; margin-bottom: .3rem; }
+    .cet-texto { flex: 1; min-width: 220px; }
+    .cet-texto h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: .5rem;
+    }
+    .cet-texto p { font-size: .92rem; color: #6b6445; }
+
+    /* Pie de página */
+    footer {
+      background: var(--cacao);
+      color: rgba(250,246,238,.6);
+      text-align: center;
+      padding: 2rem;
+      font-size: .82rem;
+    }
+    footer a { color: var(--peony); text-decoration: none; }
+
+    /* Animación */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .quienes-inner { grid-template-columns: 1fr; }
+      .deco-card { transform: none; }
+    }
+
+    .hero-emojis {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- Barra de navegacion -->
+<nav>
+  <a class="nav-logo" href="inicio.html">EcoTrama <span>✦</span></a>
+  <a class="btn-volver" href="inicio.html">← Volver al inicio</a>
+</nav>
+
+<!-- Sección Principal -->
+<div class="hero">
+  <div class="hero-badge">🌱 Moda consciente · Buenos Aires</div>
+  <h1>Sobre <em>nosotras</em></h1>
+  <p class="hero-sub">Creamos este espacio para informar, reflexionar y repensar la forma en que consumimos moda.</p>
+</div>
+
+<!-- Quiènes somos -->
+<section class="seccion-quienes">
+  <div class="quienes-inner">
+    <div class="reveal">
+      <p class="seccion-label">🧵 Quiénes somos</p>
+      <h2 class="seccion-titulo">Un grupo de chicas con ganas de cambiar algo</h2>
+      <div class="seccion-texto">
+        <p>Somos un grupo de chicas de Buenos Aires que participamos en <strong>Chicas en Tecnología (CET)</strong>, un programa que nos permitió acercarnos al desarrollo web y la programación.</p>
+        <p>A través de EcoTrama descubrimos cómo la tecnología puede ayudarnos a generar conciencia sobre el impacto de la moda.</p>
+        <p>Creemos que la tecnología también puede ser una herramienta para cuidar el planeta, y este sitio es nuestra forma de demostrarlo.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="deco-card">
+        <div class="deco-card-icon">💻</div>
+        <div class="deco-tag">Chicas en Tecnología</div>
+        <h3>Nuestro primer proyecto web</h3>
+        <p>Aprendimos a programar y decidimos usar ese conocimiento para crear algo con impacto: un proyecto sobre moda y sustentabilidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Info/Links -->
+<section class="seccion-problema">
+  <div class="problema-inner">
+    <p class="seccion-label reveal">🌍 El problema que nos movilizó</p>
+    <h2 class="seccion-titulo reveal">El impacto del fast fashion en Argentina</h2>
+    <div class="datos-grid">
+      <div class="dato-card reveal">
+        <div class="dato-emoji">🏭</div>
+        <p class="dato-texto">La Provincia de Buenos Aires genera unas <strong data-count="570">570</strong> <strong> toneladas diarias</strong> de residuos textiles. La falta de infraestructura dificulta su recuperación y reciclaje. </p>
+        <p class="dato-fuente">Fuente: <a href="https://www.ambiente.gba.gob.ar/newsletter/un_nuevo_destino_para_los_residuos_textiles" target="_blank">Ministerio de Ambiente de la Pcia. de Buenos Aires</a></p>
+      </div>
+      <div class="dato-card reveal">
+        <div class="dato-emoji">🧺</div>
+        <p class="dato-texto">En 2015, los residuos textiles representaban el <strong data-count="4.7" data-suffix="%">4,7%</strong> <strong> del total de residuos urbanos</strong> en la Ciudad de Buenos Aires. El reciclaje textil en los Puntos Verdes sigue siendo limitado.</p>
+        <p class="dato-fuente">Fuente: <a href="https://elgritodelsur.com.ar/2023/06/contaminacion-en-industria-textil-mucha-tela-para-cortar/" target="_blank">Puntos Verdes CABA</a></p>
+      </div>
+      <div class="dato-card reveal">
+        <div class="dato-emoji">🚢</div>
+        <p class="dato-texto"> Diversos sectores de la industria textil argentina expresaron preocupación por el aumento de las importaciones de ropa usada y por el riesgo de que el país se convierta en un destino para prendas descartadas provenientes del exterior.</p>
+        <p class="dato-fuente">Fuente: <a href="https://www.pilaradiario.com/la-pancha/argentina-un-paso-ser-un-nuevo-basurero-textil-del-mundo-la-invasion-la-ropa-usada-n5467747" target="_blank">CIAI / Pilar Adiario</a></p>
+      </div>
+      <div class="dato-card reveal">
+        <div class="dato-emoji">♻️</div>
+        <p class="dato-texto"> En Argentina <strong>no existe actualmente una ley nacional de Responsabilidad Extendida del Productor</strong> para el sector textil. Las empresas no tienen la obligación legal de hacerse cargo de la recolección o reutilización de las prendas descartadas.</p>
+        <p class="dato-fuente">Fuente: <a href="https://www.lanacion.com.ar/moda-y-belleza/sustentabilidad-donde-empiezan-los-residuos-textiles-y-como-terminar-con-ellos-nid2266464/" target="_blank">La Nación</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Què proponemos -->
+<section class="seccion-propuesta">
+  <div class="propuesta-inner">
+    <p class="seccion-label reveal">💚 ¿Qué proponemos?</p>
+    <p class="frase-grande reveal">
+      Pequeñas acciones pueden<br>
+     generar <em>grandes cambios.</em>
+    </p>
+    <p class="seccion-texto reveal" style="max-width:580px;margin:0 auto;">
+      Creemos que otra forma de relacionarnos con la ropa es posible. Reutilizar, reparar e intercambiar son acciones simples que pueden generar un cambio real.
+    </p>
+     <div class="propuesta-cards">
+      <div class="prop-card reveal">
+        <div class="prop-card-icon">🧺</div>
+        <h4>Doná</h4>
+        <p>Dale una segunda vida a lo que ya no usás</p>
+      </div>
+      <div class="prop-card reveal">
+        <div class="prop-card-icon">🪡</div>
+        <h4>Repará</h4>
+        <p>Encontrá una modista cerca de casa</p>
+      </div>
+      <div class="prop-card reveal">
+        <div class="prop-card-icon">🔄</div>
+        <h4>Intercambiá</h4>
+        <p>Cambiá lo que no te ponés por lo que sí querés</p>
+      </div>
+      <div class="prop-card reveal">
+        <div class="prop-card-icon">💬</div>
+        <h4>Aprendé</h4>
+        <p>Compartí ideas en el foro comunitario</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CET -->
+<section class="seccion-cet">
+  <div class="cet-inner">
+    <div class="cet-badge reveal">
+      <span>👩‍💻</span>
+      Chicas en<br>Tecnología
+    </div>
+    <div class="cet-texto reveal">
+      <h3>El lugar donde empezó todo</h3>
+      <p>EcoTrama nació en CET, un espacio que nos permitió aprender, trabajar en equipo y transformar una idea en un proyecto real.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pie de página -->
+<footer>
+  <p>EcoTrama ✦ · moda consciente · comunidad que transforma · Buenos Aires</p>
+  <p style="margin-top:.4rem;"><a href="inicio.html">← Volver al inicio</a></p>
+</footer>
+
+<script>
+  // Reveal al hacer scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<script>
+  const counters = document.querySelectorAll('[data-count]');
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const isDecimal = target % 1 !== 0;
+      let start = 0;
+      const duration = 1500;
+      const step = timestamp => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const value = progress * target;
+        el.textContent = (isDecimal ? value.toFixed(1).replace('.', ',') : Math.floor(value)) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = (isDecimal ? target.toFixed(1).replace('.', ',') : target) + suffix;
+      };
+      requestAnimationFrame(step);
+      counterObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
+</script>
+
+
+</body>
+</html>
