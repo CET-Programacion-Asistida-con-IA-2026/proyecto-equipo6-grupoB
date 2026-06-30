@@ -693,3 +693,22 @@ footer a { color: rgba(250,246,238,.6); text-decoration: none; }
   0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
   50%       { box-shadow: 0 4px 28px rgba(148,178,237,0.7); }
 }
+
+/* ── Tarjetas ── */
+.info-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.info-card:hover {
+  transform: rotate(2deg) translateY(-6px);
+  box-shadow: 0 12px 32px rgba(58,56,32,.15);
+}
+
+/* ── Brillo en EcoTrama ── */
+.nav-logo span {
+  display: inline-block;
+  animation: girar 4s linear infinite;
+}
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
