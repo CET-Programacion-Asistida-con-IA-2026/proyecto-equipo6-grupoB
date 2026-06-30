@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EcoTrama · moda consciente, comunidad que transforma</title>
+  <link rel="icon" type="image/png" href="img/boton-lunares.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <link rel="stylesheet" href="styles.css"/>
@@ -27,7 +28,7 @@
 </head>
 <body>
 
-<!-- NAV -->
+<!-- Barra de navegación -->
 <nav id="navbar">
   <a class="nav-logo" href="#">EcoTrama <span>✦</span></a>
   <ul class="nav-links">
@@ -68,8 +69,8 @@
       <div class="slide-bg-css slide-bg-zoom" style="background-image: url('img/collage-foro.png'); background-size: cover; background-position: center;"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content-animado">
-        <div class="slide-emoji-grande">💬</div>
-        <h2 class="slide-titulo">Foro Comunitario</h2>
+        <div class="slide-emoji-grande"><img src="img/icono-foro.png" alt="Foro" style="width:60px; height:auto; position:relative; top:20px;"/></div>
+        <h2 class="slide-titulo" >Foro Comunitario</h2>
         <p class="slide-descripcion">Compartí ideas, patrones y tutoriales</p>
         <a href="#mensaje" class="slide-boton-pulso">Ver foro →</a>
       </div>
@@ -81,7 +82,7 @@
       <div class="slide-bg-css slide-bg-zoom" style="background: linear-gradient(135deg, #65613F 0%, #DAE097 50%, #F7D0D5 100%);"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content-animado">
-        <div class="slide-emoji-grande">🧺</div>
+        <div class="slide-emoji-grande"><img src="img/icono-dona.png" alt="Dona" style="width:60px; height:auto; position:relative; top:20px;"/></div>
         <h2 class="slide-titulo">Doná tu Ropa</h2>
         <p class="slide-descripcion">Dale una segunda vida a lo que ya no usás</p>
         <a href="#dona" class="slide-boton-pulso">Donar ahora →</a>
@@ -94,7 +95,7 @@
       <div class="slide-bg-css slide-bg-zoom" style="background-image: url('img/collage-modistas.png'); background-size: cover; background-position: center;"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content-animado">
-        <div class="slide-emoji-grande">🪡</div>
+        <div class="slide-emoji-grande"><img src="img/icono-modistas.png" alt="modistas" style="width:60px; height:auto; position:relative; top:20px;"/></div>
         <h2 class="slide-titulo">Directorio de Modistas</h2>
         <p class="slide-descripcion">Encontrá a tu modista ideal cerca de vos</p>
         <a href="#directorio-seccion" class="slide-boton-pulso">Ver modistas →</a>
@@ -102,25 +103,12 @@
       <div class="slide-label">Directorio de modistas</div>
     </div>
 
-    <!-- SLIDE 4: Registro -->
-    <div class="carousel-slide slide-con-collage" id="registro">
-      <div class="slide-bg-css slide-bg-zoom" style="background-image: url('img/collage-comunidad.png'); background-size: cover; background-position: center;"></div>
-      <div class="slide-overlay"></div>
-      <div class="slide-content-animado">
-        <div class="slide-emoji-grande">🌸</div>
-        <h2 class="slide-titulo">Unite a la Comunidad</h2>
-        <p class="slide-descripcion">Sumate a un movimiento consciente y sostenible</p>
-        <a href="#" class="slide-boton-pulso" onclick="abrirRegistro(); return false;">Registrate →</a>
-      </div>
-      <div class="slide-label">Unite a la comunidad</div>
-    </div>
-
     <!-- SLIDE 5: Sobre nosotras -->
     <div class="carousel-slide slide-con-collage" id="sobre">
-      <div class="slide-bg-css slide-bg-zoom" style="background: linear-gradient(135deg, #65613F 0%, #8D8B4C 50%, #DAE097 100%);"></div>
+      <div class="slide-bg-css slide-bg-zoom" style="background-image: url('img/collage-sobre.png'); background-size: cover; background-position: center;"></div>
       <div class="slide-overlay"></div>
       <div class="slide-content-animado">
-        <div class="slide-emoji-grande">🌿</div>
+        <div class="slide-emoji-grande"><img src="img/icono-sobre.png" alt="Sobre nosotras" style="width:100px; height:auto; position:relative; top:20px;"/></div>
         <h2 class="slide-titulo">Sobre Nosotras</h2>
         <p class="slide-descripcion">Conocé quiénes somos y por qué hacemos esto</p>
         <a href="sobre.html" class="slide-boton-pulso">Conocernos →</a>
@@ -140,7 +128,6 @@
     <button class="dot" onclick="goToSlide(1)"></button>
     <button class="dot" onclick="goToSlide(2)"></button>
     <button class="dot" onclick="goToSlide(3)"></button>
-    <button class="dot" onclick="goToSlide(4)"></button>
   </div>
 
   <div class="scroll-hint">↓ Explorá</div>

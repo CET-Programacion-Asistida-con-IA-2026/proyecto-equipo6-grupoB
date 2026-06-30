@@ -1,6 +1,6 @@
 // ── Carrusel con fade suave ──
 let current = 0;
-const total = 5;
+const total = 4;
 let autoTimer;
 let isTransitioning = false;
 
