@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoTrama · Directorio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cloud:      #FAF6EE;
+      --peony:      #F7D0D5;
+      --dusty-rose: #D88AAE;
+      --sky:        #AFB8CD;
+      --pistachio:  #DAE097;
+      --grass:      #8D8B4C;
+      --jungle:     #65613F;
+      --cacao:      #893941;
+      --orange:     #F8B553;
+      --sky-blue:   #94B2ED;
+      --text:       #3a3228;
+      --text-soft:  #7a6e65;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cloud);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 300;
+      background: rgba(250,246,238,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(141,139,76,.15);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .8rem 2.5rem;
+      box-shadow: 0 2px 12px rgba(101,97,63,.07);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: 1.4rem;
+      color: var(--jungle); letter-spacing: .02em;
+      display: flex; align-items: center; gap: .4rem;
+      text-decoration: none;
+    }
+    .nav-logo span { font-size: .85rem; color: var(--dusty-rose); }
+    .nav-links { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: .88rem; font-weight: 500;
+      color: var(--text-soft); transition: color .2s;
+      position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1.5px; background: var(--dusty-rose);
+      transition: width .25s ease;
+    }
+    .nav-links a:hover { color: var(--jungle); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--jungle); font-weight: 600; }
+    .nav-links a.active::after { width: 100%; }
+    .btn-nav {
+      background: var(--jungle); color: #fff !important;
+      padding: .5rem 1.4rem; border-radius: 999px;
+      font-weight: 600 !important; font-size: .85rem !important;
+    }
+    .btn-nav::after { display: none !important; }
+    .btn-nav:hover { background: var(--cacao) !important; }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--jungle); border-radius: 2px; transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(250,246,238,.98); backdrop-filter: blur(12px);
+      padding: 1.5rem 2rem; z-index: 299;
+      border-bottom: 1px solid rgba(141,139,76,.15);
+      flex-direction: column; gap: 1rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-size: 1rem; font-weight: 500; color: var(--text); padding: .5rem 0; border-bottom: 1px solid rgba(141,139,76,.1); }
+    .mobile-menu .btn-nav-m { margin-top: .5rem; background: var(--jungle); color: #fff; padding: .75rem 1.4rem; border-radius: 999px; font-weight: 600; text-align: center; }
+
+    /* ── HEADER DE PÁGINA ── */
+    .page-header {
+      padding: 7rem 2.5rem 3rem;
+      background:
+        radial-gradient(ellipse 60% 70% at 90% 10%, rgba(175,184,205,.3) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 50% at 10% 90%, rgba(148,178,237,.2) 0%, transparent 50%),
+        var(--cloud);
+      text-align: center;
+    }
+    .page-header-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(175,184,205,.2); border: 1px solid rgba(175,184,205,.4);
+      color: var(--jungle); border-radius: 999px;
+      padding: .4rem 1rem; font-size: .78rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700; color: var(--jungle);
+      margin-bottom: .8rem; line-height: 1.15;
+    }
+    .page-header h1 em { font-style: italic; color: var(--dusty-rose); }
+    .page-header p { color: var(--text-soft); font-size: 1rem; line-height: 1.7; max-width: 500px; margin: 0 auto 2rem; }
+
+    /* Botón registrarse como modista */
+    .btn-registrar {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--jungle); color: #fff;
+      padding: .75rem 1.8rem; border-radius: 999px;
+      font-size: .9rem; font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .btn-registrar:hover { background: var(--cacao); transform: translateY(-2px); }
+
+    /* ── BARRA DE BÚSQUEDA Y FILTROS ── */
+    .controls {
+      max-width: 1100px; margin: 0 auto;
+      padding: 2rem 2.5rem 0;
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+
+    /* Búsqueda */
+    .search-box {
+      position: relative; max-width: 480px;
+    }
+    .search-box input {
+      width: 100%; padding: .75rem 1rem .75rem 2.8rem;
+      border: 1.5px solid rgba(141,139,76,.2);
+      border-radius: 999px; font-family: 'DM Sans', sans-serif;
+      font-size: .92rem; color: var(--text);
+      background: #fff; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search-box input:focus {
+      border-color: var(--dusty-rose);
+      box-shadow: 0 0 0 3px rgba(216,138,174,.12);
+    }
+    .search-icon {
+      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+      color: var(--text-soft); font-size: .95rem; pointer-events: none;
+    }
+
+    /* Filtros */
+    .filtros {
+      display: flex; flex-wrap: wrap; gap: .55rem; align-items: center;
+    }
+    .filtros-label {
+      font-size: .8rem; font-weight: 600; color: var(--text-soft);
+      letter-spacing: .05em; text-transform: uppercase; margin-right: .3rem;
+    }
+    .filtro-btn {
+      padding: .45rem 1.1rem; border-radius: 999px;
+      border: 1.5px solid rgba(141,139,76,.2);
+      background: #fff; color: var(--text-soft);
+      font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500;
+      cursor: pointer; transition: all .2s;
+    }
+    .filtro-btn:hover { border-color: var(--jungle); color: var(--jungle); }
+    .filtro-btn.active {
+      background: var(--jungle); color: #fff;
+      border-color: var(--jungle);
+    }
+
+    /* Contador de resultados */
+    .resultados-count {
+      font-size: .83rem; color: var(--text-soft);
+      padding: .5rem 0 0 .2rem;
+    }
+    .resultados-count strong { color: var(--jungle); }
+
+    /* ── GRILLA DE CARDS ── */
+    .grid-wrapper {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1.5rem 2.5rem 5rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    /* ── CARD estilo Twitter ── */
+    .card {
+      background: #fff;
+      border: 1.5px solid rgba(141,139,76,.12);
+      border-radius: 20px;
+      padding: 1.4rem;
+      display: flex; flex-direction: column; gap: .9rem;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      cursor: default;
+      animation: fadeCard .4s ease both;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.08);
+      border-color: rgba(216,138,174,.3);
+    }
+    @keyframes fadeCard {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cabecera de la card: avatar + nombre */
+    .card-header {
+      display: flex; align-items: center; gap: .85rem;
+    }
+    .avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+      border: 2px solid rgba(141,139,76,.15);
+    }
+    .card-nombre { flex: 1; }
+    .card-nombre h3 {
+      font-size: .97rem; font-weight: 600; color: var(--text);
+      margin-bottom: .15rem;
+    }
+    .card-nombre .ubicacion {
+      font-size: .78rem; color: var(--text-soft);
+      display: flex; align-items: center; gap: .25rem;
+    }
+
+    /* Badge de disponibilidad */
+    .badge-disponible {
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: .25rem .65rem;
+      border-radius: 999px; flex-shrink: 0;
+    }
+    .badge-disponible.si { background: rgba(218,224,151,.4); color: var(--grass); }
+    .badge-disponible.no { background: rgba(247,208,213,.4); color: var(--cacao); }
+
+    /* Descripción */
+    .card-desc {
+      font-size: .85rem; color: var(--text-soft);
+      line-height: 1.6; border-top: 1px solid rgba(141,139,76,.08);
+      padding-top: .85rem;
+    }
+
+    /* Tags de especialidad */
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: .4rem;
+    }
+    .tag {
+      font-size: .72rem; font-weight: 600;
+      padding: .25rem .7rem; border-radius: 999px;
+      letter-spacing: .04em;
+    }
+    .tag-reparacion  { background: rgba(247,208,213,.4); color: var(--cacao); }
+    .tag-upcycling   { background: rgba(218,224,151,.4); color: var(--grass); }
+    .tag-costura     { background: rgba(175,184,205,.3); color: #4a5a7a; }
+    .tag-talleres    { background: rgba(248,181,83,.25); color: #8a5a00; }
+    .tag-bordado     { background: rgba(216,138,174,.2); color: var(--cacao); }
+
+    /* Stats (reseñas) */
+    .card-stats {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: .78rem; color: var(--text-soft);
+    }
+    .stars { color: var(--orange); letter-spacing: -.05em; }
+    .reseñas { color: var(--text-soft); }
+
+    /* Botones de acción */
+    .card-actions {
+      display: flex; gap: .6rem;
+      border-top: 1px solid rgba(141,139,76,.08);
+      padding-top: .9rem;
+    }
+    .btn-contactar {
+      flex: 1; padding: .6rem;
+      background: var(--jungle); color: #fff;
+      border: none; border-radius: 999px;
+      font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 600;
+      cursor: pointer; transition: background .2s, transform .15s;
+    }
+    .btn-contactar:hover { background: var(--cacao); transform: translateY(-1px); }
+    .btn-ig {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(216,138,174,.12);
+      border: 1.5px solid rgba(216,138,174,.25);
+      color: var(--dusty-rose); font-size: .9rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background .2s;
+      text-decoration: none;
+    }
+    .btn-ig:hover { background: rgba(216,138,174,.25); }
+
+    /* Estado vacío */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center; padding: 4rem 2rem;
+    }
+    .empty-state .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--jungle); margin-bottom: .5rem; }
+    .empty-state p { color: var(--text-soft); font-size: .92rem; }
+
+    /* ── MODAL de contacto ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(30,27,20,.5); backdrop-filter: blur(6px);
+      z-index: 500; align-items: center; justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 24px;
+      padding: 2rem; max-width: 420px; width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      animation: modalIn .3s ease both;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(.95) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .modal-header h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--jungle); }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(141,139,76,.1); border: none;
+      font-size: 1rem; cursor: pointer; color: var(--text-soft);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-persona {
+      display: flex; align-items: center; gap: .75rem;
+      padding: 1rem; background: var(--cloud);
+      border-radius: 12px; margin-bottom: 1.5rem;
+    }
+    .modal-persona .avatar { width: 44px; height: 44px; font-size: 1.2rem; }
+    .modal-persona h4 { font-size: .95rem; font-weight: 600; color: var(--text); }
+    .modal-persona p { font-size: .78rem; color: var(--text-soft); }
+    .contact-options { display: flex; flex-direction: column; gap: .75rem; }
+    .contact-opt {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .9rem 1rem; border-radius: 12px;
+      border: 1.5px solid rgba(141,139,76,.15);
+      cursor: pointer; transition: border-color .2s, background .2s;
+      text-decoration: none; color: var(--text);
+    }
+    .contact-opt:hover { border-color: var(--jungle); background: rgba(141,139,76,.04); }
+    .contact-opt-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-opt-text strong { display: block; font-size: .88rem; font-weight: 600; color: var(--text); }
+    .contact-opt-text span { font-size: .78rem; color: var(--text-soft); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--jungle); color: rgba(250,246,238,.8); text-align: center; padding: 2.5rem; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+    footer p { font-size: .83rem; line-height: 1.7; }
+    footer a { color: rgba(250,246,238,.6); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      nav { padding: .8rem 1.2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .controls { padding: 1.5rem 1.2rem 0; }
+      .grid-wrapper { padding: 1.2rem 1.2rem 4rem; }
+      .page-header { padding: 6rem 1.5rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a class="nav-logo" href="ecotrama-inicio.html">EcoTrama <span>✦</span></a>
+  <ul class="nav-links">
+    <li><a href="ecotrama-inicio.html">Inicio</a></li>
+    <li><a href="#">Foro</a></li>
+    <li><a href="#">Doná</a></li>
+    <li><a href="ecotrama-directorio.html" class="active">Directorio</a></li>
+    <li><a href="#">Sobre nosotras</a></li>
+    <li><a href="#" class="btn-nav">Registrate</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="ecotrama-inicio.html" onclick="toggleMenu()">Inicio</a>
+  <a href="#" onclick="toggleMenu()">Foro</a>
+  <a href="#" onclick="toggleMenu()">Doná</a>
+  <a href="#" onclick="toggleMenu()">Directorio</a>
+  <a href="#" onclick="toggleMenu()">Sobre nosotras</a>
+  <a href="#" class="btn-nav-m" onclick="toggleMenu()">Registrate</a>
+</div>
+
+
+<!-- ═══ HEADER ═══ -->
+<div class="page-header">
+  <div class="page-header-badge">🪡 Comunidad EcoTrama</div>
+  <h1>Directorio de <em>modistas</em></h1>
+  <p>Encontrá personas que saben coser, reparar y transformar cerca tuyo. Apoyá la economía local y dale nueva vida a tus prendas.</p>
+  <button class="btn-registrar" onclick="alert('¡Próximamente! Esta función estará disponible pronto 🌿')">
+    🪡 Quiero aparecer aquí
+  </button>
+</div>
+
+
+<!-- ═══ CONTROLES ═══ -->
+<div class="controls reveal">
+  <!-- Búsqueda -->
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Buscá por nombre o barrio..." oninput="filtrar()"/>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros">
+    <span class="filtros-label">Especialidad:</span>
+    <button class="filtro-btn active" data-filtro="todos" onclick="setFiltro(this)">Todas</button>
+    <button class="filtro-btn" data-filtro="reparacion" onclick="setFiltro(this)">🧵 Reparación</button>
+    <button class="filtro-btn" data-filtro="upcycling" onclick="setFiltro(this)">♻️ Upcycling</button>
+    <button class="filtro-btn" data-filtro="costura" onclick="setFiltro(this)">✂️ Costura</button>
+    <button class="filtro-btn" data-filtro="talleres" onclick="setFiltro(this)">📚 Talleres</button>
+    <button class="filtro-btn" data-filtro="bordado" onclick="setFiltro(this)">🌸 Bordado</button>
+  </div>
+
+  <div class="resultados-count" id="contador">Mostrando <strong>12</strong> modistas</div>
+</div>
+
+
+<!-- ═══ GRILLA ═══ -->
+<div class="grid-wrapper">
+  <div class="cards-grid" id="cardsGrid">
+
+    <!-- CARD 1 -->
+    <div class="card" data-tags="reparacion costura" data-nombre="laura garcía palermo" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(247,208,213,.4);">👩</div>
+        <div class="card-nombre">
+          <h3>Laura García</h3>
+          <span class="ubicacion">📍 Palermo, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Costurera con 10 años de experiencia. Especializada en reparaciones de todo tipo y costura a medida. Trabajos rápidos y prolijos.</p>
+      <div class="card-tags">
+        <span class="tag tag-reparacion">Reparación</span>
+        <span class="tag tag-costura">Costura</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">4.9 · 38 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Laura García','👩','Palermo, CABA','@lauracose','laurag@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card" data-tags="upcycling talleres" data-nombre="marta rodríguez san telmo" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(218,224,151,.4);">👩‍🦱</div>
+        <div class="card-nombre">
+          <h3>Marta Rodríguez</h3>
+          <span class="ubicacion">📍 San Telmo, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Apasionada del upcycling y la moda circular. Dicta talleres mensuales de reutilización de telas. Transforma lo viejo en tendencia.</p>
+      <div class="card-tags">
+        <span class="tag tag-upcycling">Upcycling</span>
+        <span class="tag tag-talleres">Talleres</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">5.0 · 52 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Marta Rodríguez','👩‍🦱','San Telmo, CABA','@martaupcycle','marta@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="card" data-tags="bordado costura" data-nombre="sofía vega villa crespo" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(175,184,205,.4);">👱‍♀️</div>
+        <div class="card-nombre">
+          <h3>Sofía Vega</h3>
+          <span class="ubicacion">📍 Villa Crespo, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Bordado artesanal y personalización de prendas. Cada trabajo es único. También hace costura básica y arreglos menores.</p>
+      <div class="card-tags">
+        <span class="tag tag-bordado">Bordado</span>
+        <span class="tag tag-costura">Costura</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★☆</span>
+        <span class="reseñas">4.7 · 21 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Sofía Vega','👱‍♀️','Villa Crespo, CABA','@sofiaborda','sofia@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="card" data-tags="reparacion upcycling" data-nombre="ana lópez boedo" data-disponible="no">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(248,181,83,.25);">👩‍🦳</div>
+        <div class="card-nombre">
+          <h3>Ana López</h3>
+          <span class="ubicacion">📍 Boedo, CABA</span>
+        </div>
+        <span class="badge-disponible no">Ocupada</span>
+      </div>
+      <p class="card-desc">Modista con experiencia en reparaciones complejas: cremalleras, forros, ajustes estructurales. También hace upcycling creativo.</p>
+      <div class="card-tags">
+        <span class="tag tag-reparacion">Reparación</span>
+        <span class="tag tag-upcycling">Upcycling</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">4.8 · 44 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Ana López','👩‍🦳','Boedo, CABA','@anamodista','ana@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="card" data-tags="talleres costura" data-nombre="carmen díaz flores" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(216,138,174,.2);">🧑‍🦰</div>
+        <div class="card-nombre">
+          <h3>Carmen Díaz</h3>
+          <span class="ubicacion">📍 Flores, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Profesora de costura y modista independiente. Dicta clases para principiantes y hace trabajos a medida con telas donadas.</p>
+      <div class="card-tags">
+        <span class="tag tag-talleres">Talleres</span>
+        <span class="tag tag-costura">Costura</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">4.9 · 67 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Carmen Díaz','🧑‍🦰','Flores, CABA','@carmencose','carmen@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="card" data-tags="upcycling bordado" data-nombre="julia méndez caballito" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(141,139,76,.15);">👩‍🦲</div>
+        <div class="card-nombre">
+          <h3>Julia Méndez</h3>
+          <span class="ubicacion">📍 Caballito, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Artista textil especializada en upcycling y bordado contemporáneo. Transforma prendas básicas en piezas únicas y de autor.</p>
+      <div class="card-tags">
+        <span class="tag tag-upcycling">Upcycling</span>
+        <span class="tag tag-bordado">Bordado</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">5.0 · 29 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Julia Méndez','👩‍🦲','Caballito, CABA','@juliatextil','julia@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 7 -->
+    <div class="card" data-tags="reparacion costura" data-nombre="rosa fernández belgrano" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(247,208,213,.5);">👵</div>
+        <div class="card-nombre">
+          <h3>Rosa Fernández</h3>
+          <span class="ubicacion">📍 Belgrano, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">30 años de oficio. Reparaciones de todo tipo, especialmente ropa de bebé y niños. Precios accesibles y atención personalizada.</p>
+      <div class="card-tags">
+        <span class="tag tag-reparacion">Reparación</span>
+        <span class="tag tag-costura">Costura</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">4.9 · 91 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Rosa Fernández','👵','Belgrano, CABA','@rosamodista','rosa@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 8 -->
+    <div class="card" data-tags="talleres upcycling" data-nombre="valeria torres villa urquiza" data-disponible="no">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(218,224,151,.3);">👩</div>
+        <div class="card-nombre">
+          <h3>Valeria Torres</h3>
+          <span class="ubicacion">📍 Villa Urquiza, CABA</span>
+        </div>
+        <span class="badge-disponible no">Ocupada</span>
+      </div>
+      <p class="card-desc">Facilitadora de talleres de moda circular y costura consciente. Trabaja con grupos y organizaciones. Imparte cursos online y presenciales.</p>
+      <div class="card-tags">
+        <span class="tag tag-talleres">Talleres</span>
+        <span class="tag tag-upcycling">Upcycling</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">4.8 · 33 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Valeria Torres','👩','Villa Urquiza, CABA','@valetalleres','vale@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 9 -->
+    <div class="card" data-tags="bordado costura" data-nombre="paula suárez almagro" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(148,178,237,.25);">👩‍🦱</div>
+        <div class="card-nombre">
+          <h3>Paula Suárez</h3>
+          <span class="ubicacion">📍 Almagro, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Especialista en bordado a mano y personalización de denim. Recupera prendas dañadas con técnicas decorativas inspiradas en el kintsugi.</p>
+      <div class="card-tags">
+        <span class="tag tag-bordado">Bordado</span>
+        <span class="tag tag-costura">Costura</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★☆</span>
+        <span class="reseñas">4.6 · 17 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Paula Suárez','👩‍🦱','Almagro, CABA','@paulaborda','paula@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 10 -->
+    <div class="card" data-tags="reparacion" data-nombre="elena castro núñez" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(248,181,83,.2);">🧑</div>
+        <div class="card-nombre">
+          <h3>Elena Castro</h3>
+          <span class="ubicacion">📍 Núñez, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Reparaciones express en 24hs. Manejo todo tipo de telas incluyendo cuero y tejidos delicados. Presupuesto sin cargo.</p>
+      <div class="card-tags">
+        <span class="tag tag-reparacion">Reparación</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">4.9 · 58 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Elena Castro','🧑','Núñez, CABA','@elenacose','elena@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 11 -->
+    <div class="card" data-tags="upcycling costura talleres" data-nombre="daniela ruiz chacarita" data-disponible="si">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(216,138,174,.25);">👩</div>
+        <div class="card-nombre">
+          <h3>Daniela Ruiz</h3>
+          <span class="ubicacion">📍 Chacarita, CABA</span>
+        </div>
+        <span class="badge-disponible si">Disponible</span>
+      </div>
+      <p class="card-desc">Diseñadora de moda reconvertida a la economía circular. Crea colecciones cápsula con telas donadas y dicta talleres de patronaje básico.</p>
+      <div class="card-tags">
+        <span class="tag tag-upcycling">Upcycling</span>
+        <span class="tag tag-costura">Costura</span>
+        <span class="tag tag-talleres">Talleres</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">5.0 · 41 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Daniela Ruiz','👩','Chacarita, CABA','@danidesign','dani@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- CARD 12 -->
+    <div class="card" data-tags="bordado reparacion" data-nombre="isabel mora liniers" data-disponible="no">
+      <div class="card-header">
+        <div class="avatar" style="background: rgba(141,139,76,.2);">👩‍🦳</div>
+        <div class="card-nombre">
+          <h3>Isabel Mora</h3>
+          <span class="ubicacion">📍 Liniers, CABA</span>
+        </div>
+        <span class="badge-disponible no">Ocupada</span>
+      </div>
+      <p class="card-desc">Artesana textil con técnicas tradicionales latinoamericanas. Bordado, tejido y reparación con identidad cultural. Atiende por turno previo.</p>
+      <div class="card-tags">
+        <span class="tag tag-bordado">Bordado</span>
+        <span class="tag tag-reparacion">Reparación</span>
+      </div>
+      <div class="card-stats">
+        <span class="stars">★★★★★</span>
+        <span class="reseñas">4.9 · 26 reseñas</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-contactar" onclick="abrirModal('Isabel Mora','👩‍🦳','Liniers, CABA','@isabelartesana','isabel@mail.com')">Contactar</button>
+        <a class="btn-ig" href="#" title="Foro">📷</a>
+      </div>
+    </div>
+
+    <!-- Estado vacío -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="empty-icon">🪡</div>
+      <h3>No encontramos modistas</h3>
+      <p>Probá con otro filtro o término de búsqueda.</p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══ MODAL DE CONTACTO ═══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Contactar modista</h3>
+      <button class="modal-close" onclick="cerrarModalBtn()">✕</button>
+    </div>
+    <div class="modal-persona">
+      <div class="avatar" id="modalAvatar" style="width:44px;height:44px;font-size:1.2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(247,208,213,.4);border:2px solid rgba(141,139,76,.15);">👩</div>
+      <div>
+        <h4 id="modalNombre">Laura García</h4>
+        <p id="modalUbicacion">Palermo, CABA</p>
+      </div>
+    </div>
+    <div class="contact-options">
+      <a class="contact-opt" id="modalWsp" href="#">
+        <div class="contact-opt-icon" style="background:rgba(218,224,151,.4);">💬</div>
+        <div class="contact-opt-text">
+          <strong>WhatsApp</strong>
+          <span>Enviá un mensaje directo</span>
+        </div>
+      </a>
+      <a class="contact-opt" id="modalIg" href="#">
+        <div class="contact-opt-icon" style="background:rgba(216,138,174,.2);">📷</div>
+        <div class="contact-opt-text">
+          <strong id="modalIgHandle">@lauracose</strong>
+          <span>Ver su perfil de Instagram</span>
+        </div>
+      </a>
+      <a class="contact-opt" id="modalMail" href="#">
+        <div class="contact-opt-icon" style="background:rgba(175,184,205,.3);">✉️</div>
+        <div class="contact-opt-text">
+          <strong id="modalMailAddr">laurag@mail.com</strong>
+          <span>Enviar un correo</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">EcoTrama ✦</div>
+  <p>moda consciente · comunidad que transforma · Buenos Aires</p>
+  <p style="margin-top:.5rem; font-size:.78rem;">
+    <a href="ecotrama-inicio.html">Inicio</a> · <a href="#">Foro</a> · <a href="#">Doná</a> · <a href="#">Sobre nosotras</a>
+  </p>
+</footer>
+
+
+<script>
+  // ── Menu mobile ──
+  function toggleMenu() {
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // ── Filtros ──
+  let filtroActivo = 'todos';
+
+  function setFiltro(btn) {
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filtroActivo = btn.dataset.filtro;
+    filtrar();
+  }
+
+  function filtrar() {
+    const busqueda = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.card');
+    let visibles = 0;
+
+    cards.forEach(card => {
+      const tags    = card.dataset.tags || '';
+      const nombre  = card.dataset.nombre || '';
+      const matchFiltro  = filtroActivo === 'todos' || tags.includes(filtroActivo);
+      const matchBusqueda = nombre.includes(busqueda);
+
+      if (matchFiltro && matchBusqueda) {
+        card.style.display = '';
+        visibles++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Estado vacío
+    document.getElementById('emptyState').style.display = visibles === 0 ? 'block' : 'none';
+
+    // Contador
+    document.getElementById('contador').innerHTML =
+      `Mostrando <strong>${visibles}</strong> modista${visibles !== 1 ? 's' : ''}`;
+  }
+
+  // ── Modal ──
+  function abrirModal(nombre, avatar, ubicacion, ig, mail) {
+    document.getElementById('modalNombre').textContent    = nombre;
+    document.getElementById('modalAvatar').textContent    = avatar;
+    document.getElementById('modalUbicacion').textContent = ubicacion;
+    document.getElementById('modalIgHandle').textContent  = ig;
+    document.getElementById('modalMailAddr').textContent  = mail;
+    document.getElementById('modalMail').href = 'mailto:' + mail;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarModalBtn() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function cerrarModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) cerrarModalBtn();
+  }
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: .1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
