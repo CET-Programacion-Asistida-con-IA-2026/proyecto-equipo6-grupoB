@@ -49,17 +49,61 @@
       gap: .3rem;
     }
     .nav-logo span { color: var(--peony); }
-    .btn-volver {
-      background: var(--cacao);
-      color: var(--cloud);
-      padding: .45rem 1.2rem;
-      border-radius: 99px;
-      text-decoration: none;
-      font-size: .85rem;
-      font-weight: 500;
-      transition: background .2s;
+
+    /* ── Menú ── */
+    .nav-links { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--cacao); font-size: .88rem; font-weight: 500;
+      position: relative; padding-bottom: 2px; transition: color .2s;
     }
-    .btn-volver:hover { background: var(--oliva); }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1.5px; background: var(--peony);
+      transition: width .25s ease;
+    }
+    .nav-links a:hover { color: var(--oliva); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--oliva); font-weight: 600; }
+    .nav-links a.active::after { width: 100%; }
+    .btn-nav {
+      background: var(--cacao); color: var(--cloud) !important;
+      padding: .5rem 1.4rem; border-radius: 999px;
+      font-weight: 600 !important; font-size: .85rem !important;
+    }
+    .btn-nav::after { display: none !important; }
+    .btn-nav:hover { background: var(--oliva) !important; }
+
+    /* ── Hamburguesa (mobile) ── */
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      cursor: pointer; width: 28px; height: 22px;
+    }
+    .hamburger span {
+      display: block; height: 2px; width: 100%; background: var(--cacao);
+      border-radius: 2px; transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Menú mobile ── */
+    .mobile-menu {
+      display: none; flex-direction: column;
+      position: fixed; top: 57px; left: 0; right: 0;
+      background: var(--cloud); border-bottom: 1px solid rgba(101,97,63,.15);
+      padding: 1rem 2rem; gap: 1rem; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; color: var(--cacao); font-size: .95rem; font-weight: 500; }
+    .mobile-menu .btn-nav-m {
+      background: var(--cacao); color: var(--cloud); text-align: center;
+      padding: .6rem; border-radius: 999px; font-weight: 600;
+    }
+
+    @media (max-width: 780px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
 
     /* ── Sección Principal ── */
     .hero {
@@ -357,8 +401,29 @@
 <!-- Barra de navegacion -->
 <nav>
   <a class="nav-logo" href="inicio.html">EcoTrama <span>✦</span></a>
-  <a class="btn-volver" href="inicio.html">← Volver al inicio</a>
+  <ul class="nav-links">
+    <li><a href="inicio.html#inicio">Inicio</a></li>
+    <li><a href="inicio.html#foro">Foro</a></li>
+    <li><a href="inicio.html#dona">Doná</a></li>
+    <li><a href="inicio.html#mapa">Mapa</a></li>
+    <li><a href="directorio.html">Directorio</a></li>
+    <li><a href="sobre.html">Sobre nosotras</a></li>
+    <li><a href="inicio.html" class="btn-nav">Registrate</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="inicio.html#inicio" onclick="toggleMenu()">Inicio</a>
+  <a href="inicio.html#foro" onclick="toggleMenu()">Foro</a>
+  <a href="inicio.html#dona" onclick="toggleMenu()">Doná</a>
+  <a href="inicio.html#mapa" onclick="toggleMenu()">Mapa</a>
+  <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
+  <a href="sobre.html" onclick="toggleMenu()">Sobre nosotras</a>
+  <a href="inicio.html" onclick="toggleMenu()" class="btn-nav-m">Registrate</a>
+</div>
 
 <!-- Sección Principal -->
 <div class="hero">
@@ -475,6 +540,14 @@
   <p>EcoTrama ✦ · moda consciente · comunidad que transforma · Buenos Aires</p>
   <p style="margin-top:.4rem;"><a href="inicio.html">← Volver al inicio</a></p>
 </footer>
+
+<script>
+  // ── Menú mobile ──
+  function toggleMenu() {
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+</script>
 
 <script>
   // Reveal al hacer scroll

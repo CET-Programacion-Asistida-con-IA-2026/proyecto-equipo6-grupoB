@@ -62,8 +62,7 @@
     }
     .nav-links a:hover { color: var(--jungle); }
     .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active { color: var(--jungle); font-weight: 600; }
-    .nav-links a.active::after { width: 100%; }
+    
     .btn-nav {
       background: var(--jungle); color: #fff !important;
       padding: .5rem 1.4rem; border-radius: 999px;
@@ -393,12 +392,13 @@
 <nav>
   <a class="nav-logo" href="inicio.html">EcoTrama <span>✦</span></a>
   <ul class="nav-links">
-    <li><a href="inicio.html">Inicio</a></li>
-    <li><a href="#">Foro</a></li>
-    <li><a href="#">Doná</a></li>
-    <li><a href="directorio.html" class="active">Directorio</a></li>
-    <li><a href="#">Sobre nosotras</a></li>
-    <li><a href="#" class="btn-nav">Registrate</a></li>
+    <li><a href="inicio.html#inicio">Inicio</a></li>
+    <li><a href="inicio.html#foro">Foro</a></li>
+    <li><a href="inicio.html#dona">Doná</a></li>
+    <li><a href="inicio.html#mapa">Mapa</a></li>
+    <li><a href="directorio.html">Directorio</a></li>
+    <li><a href="sobre.html">Sobre nosotras</a></li>
+    <li><a href="inicio.html" class="btn-nav">Registrate</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -406,12 +406,13 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="inicio.html" onclick="toggleMenu()">Inicio</a>
-  <a href="#" onclick="toggleMenu()">Foro</a>
-  <a href="#" onclick="toggleMenu()">Doná</a>
+  <a href="inicio.html#inicio" onclick="toggleMenu()">Inicio</a>
+  <a href="inicio.html#foro" onclick="toggleMenu()">Foro</a>
+  <a href="inicio.html#dona" onclick="toggleMenu()">Doná</a>
+  <a href="inicio.html#mapa" onclick="toggleMenu()">Mapa</a>
   <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
-  <a href="#" onclick="toggleMenu()">Sobre nosotras</a>
-  <a href="#" class="btn-nav-m" onclick="toggleMenu()">Registrate</a>
+  <a href="sobre.html" onclick="toggleMenu()">Sobre nosotras</a>
+  <a href="inicio.html" onclick="toggleMenu()" class="btn-nav-m">Registrate</a>
 </div>
 
 
