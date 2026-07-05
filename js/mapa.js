@@ -16,10 +16,16 @@ function iniciarMapa() {
   }).addTo(map);
 
   // Íconos personalizados por categoría
-  function crearIcono(emoji) {
+ function crearIcono(emoji) {
+    const iconos = {
+      '🧺': 'img/mapa-dona.png',
+      '🪡': 'img/mapa-modista.png',
+      '🔄': 'img/icono-feria.png'
+    };
+    const src = iconos[emoji] || emoji;
     return L.divIcon({
       className: 'mapa-marker',
-      html: `<div class="marker-bubble">${emoji}</div>`,
+      html: `<div class="marker-bubble"><img src="${src}" style="width:20px;height:20px;object-fit:contain;"/></div>`,
       iconSize: [40, 40],
       iconAnchor: [20, 40],
       popupAnchor: [0, -42]
@@ -36,13 +42,6 @@ function iniciarMapa() {
       horario: 'Lun–Vie 10–18hs'
     },
     {
-      lat: -34.5875, lng: -58.4150,
-      emoji: '🪡', categoria: 'modista',
-      nombre: 'Taller Hilo Verde',
-      desc: 'Reparaciones, ajustes y transformaciones',
-      horario: 'Mar–Sáb 9–17hs'
-    },
-    {
       lat: -34.6200, lng: -58.3700,
       emoji: '🔄', categoria: 'intercambio',
       nombre: 'Feria de intercambio La Boca',
@@ -55,13 +54,6 @@ function iniciarMapa() {
       nombre: 'Punto verde Palermo',
       desc: 'Ropa de mujer, hombre y niños',
       horario: 'Lun–Dom 8–20hs'
-    },
-    {
-      lat: -34.6100, lng: -58.4000,
-      emoji: '🪡', categoria: 'modista',
-      nombre: 'Costurera Florencia',
-      desc: 'Especialista en upcycling y prendas vintage',
-      horario: 'Con turno previo'
     },
     {
       lat: -34.5780, lng: -58.4250,
