@@ -4,387 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EcoTrama · Directorio</title>
+  <link rel="icon" type="image/png" href="img/boton-manzana.png"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="directorio.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cloud:      #FAF6EE;
-      --peony:      #F7D0D5;
-      --dusty-rose: #D88AAE;
-      --sky:        #AFB8CD;
-      --pistachio:  #DAE097;
-      --grass:      #8D8B4C;
-      --jungle:     #65613F;
-      --cacao:      #893941;
-      --orange:     #F8B553;
-      --sky-blue:   #94B2ED;
-      --text:       #3a3228;
-      --text-soft:  #7a6e65;
-    }
-
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--cloud);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; width: 100%; z-index: 300;
-      background: rgba(250,246,238,.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(141,139,76,.15);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: .8rem 2.5rem;
-      box-shadow: 0 2px 12px rgba(101,97,63,.07);
-    }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700; font-size: 1.4rem;
-      color: var(--jungle); letter-spacing: .02em;
-      display: flex; align-items: center; gap: .4rem;
-      text-decoration: none;
-    }
-    .nav-logo span { font-size: .85rem; color: var(--dusty-rose); }
-    .nav-links { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
-    .nav-links a {
-      text-decoration: none; font-size: .88rem; font-weight: 500;
-      color: var(--text-soft); transition: color .2s;
-      position: relative; padding-bottom: 2px;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: 0; left: 0;
-      width: 0; height: 1.5px; background: var(--dusty-rose);
-      transition: width .25s ease;
-    }
-    .nav-links a:hover { color: var(--jungle); }
-    .nav-links a:hover::after { width: 100%; }
-    
-    .btn-nav {
-      background: var(--jungle); color: #fff !important;
-      padding: .5rem 1.4rem; border-radius: 999px;
-      font-weight: 600 !important; font-size: .85rem !important;
-    }
-    .btn-nav::after { display: none !important; }
-    .btn-nav:hover { background: var(--cacao) !important; }
-
-    /* Hamburger */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-    .hamburger span { width: 24px; height: 2px; background: var(--jungle); border-radius: 2px; transition: all .3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none; position: fixed; top: 64px; left: 0; right: 0;
-      background: rgba(250,246,238,.98); backdrop-filter: blur(12px);
-      padding: 1.5rem 2rem; z-index: 299;
-      border-bottom: 1px solid rgba(141,139,76,.15);
-      flex-direction: column; gap: 1rem;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { text-decoration: none; font-size: 1rem; font-weight: 500; color: var(--text); padding: .5rem 0; border-bottom: 1px solid rgba(141,139,76,.1); }
-    .mobile-menu .btn-nav-m { margin-top: .5rem; background: var(--jungle); color: #fff; padding: .75rem 1.4rem; border-radius: 999px; font-weight: 600; text-align: center; }
-
-    /* ── HEADER DE PÁGINA ── */
-    .page-header {
-      padding: 7rem 2.5rem 3rem;
-      background:
-        radial-gradient(ellipse 60% 70% at 90% 10%, rgba(175,184,205,.3) 0%, transparent 55%),
-        radial-gradient(ellipse 40% 50% at 10% 90%, rgba(148,178,237,.2) 0%, transparent 50%),
-        var(--cloud);
-      text-align: center;
-    }
-    .page-header-badge {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(175,184,205,.2); border: 1px solid rgba(175,184,205,.4);
-      color: var(--jungle); border-radius: 999px;
-      padding: .4rem 1rem; font-size: .78rem; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .page-header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 700; color: var(--jungle);
-      margin-bottom: .8rem; line-height: 1.15;
-    }
-    .page-header h1 em { font-style: italic; color: var(--dusty-rose); }
-    .page-header p { color: var(--text-soft); font-size: 1rem; line-height: 1.7; max-width: 500px; margin: 0 auto 2rem; }
-
-    /* Botón registrarse como modista */
-    .btn-registrar {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--jungle); color: #fff;
-      padding: .75rem 1.8rem; border-radius: 999px;
-      font-size: .9rem; font-weight: 600;
-      text-decoration: none; border: none; cursor: pointer;
-      transition: background .2s, transform .2s;
-    }
-    .btn-registrar:hover { background: var(--cacao); transform: translateY(-2px); }
-
-    /* ── BARRA DE BÚSQUEDA Y FILTROS ── */
-    .controls {
-      max-width: 1100px; margin: 0 auto;
-      padding: 2rem 2.5rem 0;
-      display: flex; flex-direction: column; gap: 1.2rem;
-    }
-
-    /* Búsqueda */
-    .search-box {
-      position: relative; max-width: 480px;
-    }
-    .search-box input {
-      width: 100%; padding: .75rem 1rem .75rem 2.8rem;
-      border: 1.5px solid rgba(141,139,76,.2);
-      border-radius: 999px; font-family: 'DM Sans', sans-serif;
-      font-size: .92rem; color: var(--text);
-      background: #fff; outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .search-box input:focus {
-      border-color: var(--dusty-rose);
-      box-shadow: 0 0 0 3px rgba(216,138,174,.12);
-    }
-    .search-icon {
-      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
-      color: var(--text-soft); font-size: .95rem; pointer-events: none;
-    }
-
-    /* Filtros */
-    .filtros {
-      display: flex; flex-wrap: wrap; gap: .55rem; align-items: center;
-    }
-    .filtros-label {
-      font-size: .8rem; font-weight: 600; color: var(--text-soft);
-      letter-spacing: .05em; text-transform: uppercase; margin-right: .3rem;
-    }
-    .filtro-btn {
-      padding: .45rem 1.1rem; border-radius: 999px;
-      border: 1.5px solid rgba(141,139,76,.2);
-      background: #fff; color: var(--text-soft);
-      font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500;
-      cursor: pointer; transition: all .2s;
-    }
-    .filtro-btn:hover { border-color: var(--jungle); color: var(--jungle); }
-    .filtro-btn.active {
-      background: var(--jungle); color: #fff;
-      border-color: var(--jungle);
-    }
-
-    /* Contador de resultados */
-    .resultados-count {
-      font-size: .83rem; color: var(--text-soft);
-      padding: .5rem 0 0 .2rem;
-    }
-    .resultados-count strong { color: var(--jungle); }
-
-    /* ── GRILLA DE CARDS ── */
-    .grid-wrapper {
-      max-width: 1100px; margin: 0 auto;
-      padding: 1.5rem 2.5rem 5rem;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.2rem;
-    }
-
-    /* ── CARD estilo Twitter ── */
-    .card {
-      background: #fff;
-      border: 1.5px solid rgba(141,139,76,.12);
-      border-radius: 20px;
-      padding: 1.4rem;
-      display: flex; flex-direction: column; gap: .9rem;
-      transition: transform .25s, box-shadow .25s, border-color .25s;
-      cursor: default;
-      animation: fadeCard .4s ease both;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,.08);
-      border-color: rgba(216,138,174,.3);
-    }
-    @keyframes fadeCard {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Cabecera de la card: avatar + nombre */
-    .card-header {
-      display: flex; align-items: center; gap: .85rem;
-    }
-    .avatar {
-      width: 52px; height: 52px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; flex-shrink: 0;
-      border: 2px solid rgba(141,139,76,.15);
-    }
-    .card-nombre { flex: 1; }
-    .card-nombre h3 {
-      font-size: .97rem; font-weight: 600; color: var(--text);
-      margin-bottom: .15rem;
-    }
-    .card-nombre .ubicacion {
-      font-size: .78rem; color: var(--text-soft);
-      display: flex; align-items: center; gap: .25rem;
-    }
-
-    /* Badge de disponibilidad */
-    .badge-disponible {
-      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
-      text-transform: uppercase; padding: .25rem .65rem;
-      border-radius: 999px; flex-shrink: 0;
-    }
-    .badge-disponible.si { background: rgba(218,224,151,.4); color: var(--grass); }
-    .badge-disponible.no { background: rgba(247,208,213,.4); color: var(--cacao); }
-
-    /* Descripción */
-    .card-desc {
-      font-size: .85rem; color: var(--text-soft);
-      line-height: 1.6; border-top: 1px solid rgba(141,139,76,.08);
-      padding-top: .85rem;
-    }
-
-    /* Tags de especialidad */
-    .card-tags {
-      display: flex; flex-wrap: wrap; gap: .4rem;
-    }
-    .tag {
-      font-size: .72rem; font-weight: 600;
-      padding: .25rem .7rem; border-radius: 999px;
-      letter-spacing: .04em;
-    }
-    .tag-reparacion  { background: rgba(247,208,213,.4); color: var(--cacao); }
-    .tag-upcycling   { background: rgba(218,224,151,.4); color: var(--grass); }
-    .tag-costura     { background: rgba(175,184,205,.3); color: #4a5a7a; }
-    .tag-talleres    { background: rgba(248,181,83,.25); color: #8a5a00; }
-    .tag-bordado     { background: rgba(216,138,174,.2); color: var(--cacao); }
-
-    /* Stats (reseñas) */
-    .card-stats {
-      display: flex; align-items: center; gap: 1rem;
-      font-size: .78rem; color: var(--text-soft);
-    }
-    .stars { color: var(--orange); letter-spacing: -.05em; }
-    .reseñas { color: var(--text-soft); }
-
-    /* Botones de acción */
-    .card-actions {
-      display: flex; gap: .6rem;
-      border-top: 1px solid rgba(141,139,76,.08);
-      padding-top: .9rem;
-    }
-    .btn-contactar {
-      flex: 1; padding: .6rem;
-      background: var(--jungle); color: #fff;
-      border: none; border-radius: 999px;
-      font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 600;
-      cursor: pointer; transition: background .2s, transform .15s;
-    }
-    .btn-contactar:hover { background: var(--cacao); transform: translateY(-1px); }
-    .btn-ig {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(216,138,174,.12);
-      border: 1.5px solid rgba(216,138,174,.25);
-      color: var(--dusty-rose); font-size: .9rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background .2s;
-      text-decoration: none;
-    }
-    .btn-ig:hover { background: rgba(216,138,174,.25); }
-
-    /* Estado vacío */
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center; padding: 4rem 2rem;
-    }
-    .empty-state .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; }
-    .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--jungle); margin-bottom: .5rem; }
-    .empty-state p { color: var(--text-soft); font-size: .92rem; }
-
-    /* ── MODAL de contacto ── */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(30,27,20,.5); backdrop-filter: blur(6px);
-      z-index: 500; align-items: center; justify-content: center;
-      padding: 1.5rem;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: #fff; border-radius: 24px;
-      padding: 2rem; max-width: 420px; width: 100%;
-      box-shadow: 0 20px 60px rgba(0,0,0,.15);
-      animation: modalIn .3s ease both;
-    }
-    @keyframes modalIn {
-      from { opacity: 0; transform: scale(.95) translateY(10px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-    .modal-header h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--jungle); }
-    .modal-close {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(141,139,76,.1); border: none;
-      font-size: 1rem; cursor: pointer; color: var(--text-soft);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .modal-persona {
-      display: flex; align-items: center; gap: .75rem;
-      padding: 1rem; background: var(--cloud);
-      border-radius: 12px; margin-bottom: 1.5rem;
-    }
-    .modal-persona .avatar { width: 44px; height: 44px; font-size: 1.2rem; }
-    .modal-persona h4 { font-size: .95rem; font-weight: 600; color: var(--text); }
-    .modal-persona p { font-size: .78rem; color: var(--text-soft); }
-    .contact-options { display: flex; flex-direction: column; gap: .75rem; }
-    .contact-opt {
-      display: flex; align-items: center; gap: .75rem;
-      padding: .9rem 1rem; border-radius: 12px;
-      border: 1.5px solid rgba(141,139,76,.15);
-      cursor: pointer; transition: border-color .2s, background .2s;
-      text-decoration: none; color: var(--text);
-    }
-    .contact-opt:hover { border-color: var(--jungle); background: rgba(141,139,76,.04); }
-    .contact-opt-icon {
-      width: 38px; height: 38px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
-    }
-    .contact-opt-text strong { display: block; font-size: .88rem; font-weight: 600; color: var(--text); }
-    .contact-opt-text span { font-size: .78rem; color: var(--text-soft); }
-
-    /* ── REVEAL ── */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── FOOTER ── */
-    footer { background: var(--jungle); color: rgba(250,246,238,.8); text-align: center; padding: 2.5rem; }
-    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
-    footer p { font-size: .83rem; line-height: 1.7; }
-    footer a { color: rgba(250,246,238,.6); text-decoration: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .cards-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      nav { padding: .8rem 1.2rem; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .cards-grid { grid-template-columns: 1fr; }
-      .controls { padding: 1.5rem 1.2rem 0; }
-      .grid-wrapper { padding: 1.2rem 1.2rem 4rem; }
-      .page-header { padding: 6rem 1.5rem 2.5rem; }
-    }
-  </style>
 </head>
 <body>
 
@@ -445,7 +68,6 @@
     <button class="filtro-btn" data-filtro="talleres" onclick="setFiltro(this)"><img src="img/icono-taller.png" style="width:20px; height:auto; vertical-align:middle; margin-right:4px;"/> Talleres</button>
     <button class="filtro-btn" data-filtro="bordado" onclick="setFiltro(this)"><img src="img/icono-bordar.png" style="width:20px; height:auto; vertical-align:middle; margin-right:4px;"/> Bordado</button>
   </div>
-
   <div class="resultados-count" id="contador">Mostrando <strong>12</strong> modistas</div>
 </div>
 
@@ -886,6 +508,81 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: .1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<div id="modal-agregar" style="display:none; position:fixed; inset:0; background:rgba(58,56,32,.55); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center; padding:1rem;">
+  <div style="background:#FAF6EE; border-radius:20px; padding:2.4rem 2rem; width:100%; max-width:440px; position:relative;">
+    <button onclick="cerrarFormulario()" style="position:absolute; top:1rem; right:1.1rem; background:none; border:none; font-size:1.1rem; cursor:pointer;">✕</button>
+    <h2 style="font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:1.2rem;">🪡 Agregar modista</h2>
+    <div style="display:flex; flex-direction:column; gap:.8rem;">
+      <input id="f-nombre" type="text" placeholder="Nombre completo" style="padding:.7rem 1rem; border-radius:10px; border:1.5px solid #c8bf9e; font-size:.95rem;"/>
+      <input id="f-ubicacion" type="text" placeholder="Barrio, CABA" style="padding:.7rem 1rem; border-radius:10px; border:1.5px solid #c8bf9e; font-size:.95rem;"/>
+      <textarea id="f-desc" placeholder="Describí tu trabajo..." style="padding:.7rem 1rem; border-radius:10px; border:1.5px solid #c8bf9e; font-size:.95rem; resize:none; height:80px;"></textarea>
+      <select id="f-especialidad" style="padding:.7rem 1rem; border-radius:10px; border:1.5px solid #c8bf9e; font-size:.95rem;">
+        <option value="reparacion">Reparación</option>
+        <option value="costura">Costura</option>
+        <option value="upcycling">Upcycling</option>
+        <option value="talleres">Talleres</option>
+        <option value="bordado">Bordado</option>
+      </select>
+      <button onclick="agregarModista()" style="background:#65613F; color:white; border:none; padding:.8rem; border-radius:10px; font-size:1rem; cursor:pointer; font-weight:600;">Agregar ✨</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function abrirFormulario() {
+  document.getElementById('modal-agregar').style.display = 'flex';
+}
+
+function cerrarFormulario() {
+  document.getElementById('modal-agregar').style.display = 'none';
+  document.getElementById('f-nombre').value = '';
+  document.getElementById('f-ubicacion').value = '';
+  document.getElementById('f-desc').value = '';
+}
+
+function agregarModista() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const ubicacion = document.getElementById('f-ubicacion').value.trim();
+  const desc = document.getElementById('f-desc').value.trim();
+  const especialidad = document.getElementById('f-especialidad').value;
+
+  if (!nombre || !ubicacion || !desc) {
+    alert('Por favor completá todos los campos 🌿');
+    return;
+  }
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.setAttribute('data-tags', especialidad);
+  card.setAttribute('data-nombre', nombre.toLowerCase());
+  card.setAttribute('data-disponible', 'si');
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="avatar" style="background:rgba(218,224,151,.4);">👩</div>
+      <div class="card-nombre">
+        <h3>${nombre}</h3>
+        <span class="ubicacion">📍 ${ubicacion}</span>
+      </div>
+      <span class="badge-disponible si">Disponible</span>
+    </div>
+    <p class="card-desc">${desc}</p>
+    <div class="card-tags">
+      <span class="tag tag-${especialidad}">${especialidad.charAt(0).toUpperCase() + especialidad.slice(1)}</span>
+    </div>
+    <div class="card-stats">
+      <span class="stars">★★★★★</span>
+      <span class="reseñas">Nueva</span>
+    </div>
+    <div class="card-actions">
+      <button class="btn-contactar">Contactar</button>
+    </div>
+  `;
+
+  document.getElementById('cardsGrid').prepend(card);
+  cerrarFormulario();
+}
 </script>
 
 </body>

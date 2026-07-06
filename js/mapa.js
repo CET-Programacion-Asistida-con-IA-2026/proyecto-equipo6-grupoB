@@ -16,13 +16,12 @@ function iniciarMapa() {
   }).addTo(map);
 
   // Íconos personalizados por categoría
- function crearIcono(emoji) {
+ function crearIcono(categoria) {
     const iconos = {
-      '🧺': 'img/mapa-dona.png',
-      '🪡': 'img/mapa-modista.png',
-      '🔄': 'img/icono-feria.png'
+      'donacion': 'img/mapa-dona.png',
+      'feria': 'img/icono-feria.png'
     };
-    const src = iconos[emoji] || emoji;
+    const src = iconos[categoria];
     return L.divIcon({
       className: 'mapa-marker',
       html: `<div class="marker-bubble"><img src="${src}" style="width:20px;height:20px;object-fit:contain;"/></div>`,
@@ -31,64 +30,75 @@ function iniciarMapa() {
       popupAnchor: [0, -42]
     });
   }
-
-  // Puntos de donación, modistas e intercambio en Buenos Aires
+  const marcadores = []; // guardamos cada marker junto a su categoría, para poder filtrarlos después
+  // Puntos de donación y ferias en Buenos Aires
   const puntos = [
     {
       lat: -34.6037, lng: -58.3816,
-      emoji: '🧺', categoria: 'donacion',
-      nombre: 'Centro de donaciones San Telmo',
+      categoria: 'donacion',
+      nombre: 'Punto de donación San Telmo',
       desc: 'Ropa en buen estado y telas para upcycling',
-      horario: 'Lun–Vie 10–18hs'
+      horario: 'Lun–Vie 10–18 hs'
     },
     {
       lat: -34.6200, lng: -58.3700,
-      emoji: '🔄', categoria: 'intercambio',
-      nombre: 'Feria de intercambio La Boca',
-      desc: 'Intercambio de prendas todos los sábados',
-      horario: 'Sáb 10–14hs'
+      categoria: 'feria',
+      nombre: 'Feria americana La Boca',
+      desc: 'Venta de ropa usada y accesorios',
+      horario: 'Sáb 10–14 hs'
     },
     {
       lat: -34.5950, lng: -58.4300,
-      emoji: '🧺', categoria: 'donacion',
-      nombre: 'Punto verde Palermo',
-      desc: 'Ropa de mujer, hombre y niños',
-      horario: 'Lun–Dom 8–20hs'
+      categoria: 'donacion',
+      nombre: 'Punto de donación Palermo',
+      desc: 'Ropa y calzado en buen estado',
+      horario: 'Lun–Dom 8–20 hs'
     },
     {
       lat: -34.5780, lng: -58.4250,
-      emoji: '🔄', categoria: 'intercambio',
-      nombre: 'Club de intercambio Colegiales',
-      desc: 'Reuniones mensuales de intercambio comunitario',
-      horario: '1er domingo de mes, 11hs'
+      categoria: 'feria',
+      nombre: 'Feria americana Colegiales',
+      desc: 'Ropa usada, vintage y accesorios',
+      horario: '1er domingo del mes 11–17 hs'
     },
     {
       lat: -34.6300, lng: -58.3600,
-      emoji: '🧺', categoria: 'donacion',
-      nombre: 'Donaciones Barracas',
+      categoria: 'donacion',
+      nombre: 'Punto de donación Barracas',
       desc: 'Telas, botones y accesorios de costura',
-      horario: 'Mié y Vie 14–18hs'
+      horario: 'Mié y Vie 14–18 hs'
     },
   ];
 
   // Agregar marcadores al mapa
   puntos.forEach(p => {
-    const marker = L.marker([p.lat, p.lng], { icon: crearIcono(p.emoji) }).addTo(map);
+    const marker = L.marker([p.lat, p.lng], { icon: crearIcono(p.categoria) }).addTo(map);
     marker.bindPopup(`
       <div class="mapa-popup">
-        <div class="popup-header">${p.emoji} <strong>${p.nombre}</strong></div>
+        <div class="popup-header">
+        <img src="${p.categoria === 'donacion' ? 'img/donacion.png' : 'img/ropa.png'}"
+        style="width:18px;height:18px;vertical-align:middle;margin-right:6px;">
+        <strong>${p.nombre}</strong>
+        </div>
         <p>${p.desc}</p>
-        <span class="popup-horario">⏰ ${p.horario}</span>
+        <span class="popup-horario"><img src="img/reloj.png" style="width:15px; height:auto; vertical-align:middle; margin-right:6px;"/> ${p.horario}</span>
       </div>
     `);
+    marcadores.push({ marker, categoria: p.categoria });
   });
 
-  // Filtros por categoría
+// Filtros por categoría
   document.querySelectorAll('.mapa-filtro').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.mapa-filtro').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      // Lógica de filtro visual (versión simplificada)
+
+      const categoriaSeleccionada = btn.dataset.cat;
+      marcadores.forEach(({ marker, categoria }) => {
+        const debeVerse = categoriaSeleccionada === 'todos' || categoria === categoriaSeleccionada;
+        if (debeVerse && !map.hasLayer(marker)) marker.addTo(map);
+        if (!debeVerse && map.hasLayer(marker)) map.removeLayer(marker);
+      });
     });
   });
 }
