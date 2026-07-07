@@ -276,7 +276,7 @@
       padding: 2rem;
       font-size: .82rem;
     }
-    footer a { color: var(--peony); text-decoration: none; }
+    footer a {  color: rgba(250,246,238,.6); text-decoration: none; }
 
     /* Animación */
     .reveal {
