@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoTrama 🌿 foro comunitario</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/foro.css">
+</head>
+<body>
+<div id="app">
+ 
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <span id="topbar-logo">EcoTrama 🌿</span>
+    <div id="user-selector-wrap">
+      <div class="avatar" id="av-topbar" style="width:24px;height:24px;font-size:9px;"></div>
+      <select id="sel-usuario" onchange="cambiarUsuario(this.value)"></select>
+    </div>
+  </div>
+ 
+  <!-- NAV PRINCIPAL -->
+  <nav id="main-nav">
+    <button class="nav-btn activo" id="nav-feed"    onclick="irA('feed',this)">
+      <span class="nav-icon">🏠</span><span class="nav-label">Inicio</span>
+    </button>
+    <button class="nav-btn" id="nav-explorar" onclick="irA('explorar',this)">
+      <span class="nav-icon">🔍</span><span class="nav-label">Explorar</span>
+    </button>
+    <button class="nav-btn" id="nav-logros"   onclick="irA('logros',this)">
+      <span class="nav-icon">🏅</span><span class="nav-label">Logros</span>
+    </button>
+    <button class="nav-btn" id="nav-perfil"   onclick="verMiPerfil()">
+      <span class="nav-icon">👤</span><span class="nav-label">Perfil</span>
+    </button>
+  </nav>
+ 
+  <!-- CONTENIDO -->
+  <div id="contenido">
+ 
+    <!-- FEED -->
+    <div id="vista-feed" class="vista activa">
+      <div class="feed-layout">
+        <div class="feed-main">
+          <!-- Composer -->
+          <div id="composer">
+            <div class="composer-row">
+              <div class="avatar" id="av-composer" style="width:42px;height:42px;font-size:15px;"></div>
+              <div style="flex:1">
+                <textarea id="composer-textarea" placeholder="¿Qué querés compartir con la comunidad?" maxlength="280" oninput="actualizarComposer()"></textarea>
+                <input type="text" id="composer-link-input" placeholder="Pegá el link acá..." />
+                <div id="composer-media-placeholder">📎 Seleccioná un archivo (simulado)</div>
+                <div class="composer-bottom">
+                  <div class="tipo-btns">
+                    <button class="tipo-btn activo" onclick="setTipo('texto',this)">📝 Texto</button>
+                    <button class="tipo-btn" onclick="setTipo('imagen',this)">📷 Foto</button>
+                    <button class="tipo-btn" onclick="setTipo('video',this)">🎬 Video</button>
+                    <button class="tipo-btn" onclick="setTipo('link',this)">🔗 Link</button>
+                  </div>
+                  <div class="composer-right">
+                    <span id="char-count">280</span>
+                    <button id="btn-publicar" onclick="publicar()" disabled>Publicar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- Posts -->
+          <div id="lista-posts"></div>
+        </div>
+ 
+        <aside class="feed-sidebar">
+          <!-- EcoConsejo -->
+          <div id="eco-panel">
+            <span id="eco-icono"></span>
+            <p class="eco-label">🌿 EcoConsejo</p>
+            <p id="eco-texto"></p>
+            <div id="eco-dots"></div>
+
+             <div id="menu-secciones">
+            <p class="menu-label">🧭 Explorá RAÍCES</p>
+            <nav class="menu-links">
+              <a href="#" class="menu-link"><span>🏠</span> Inicio</a>          <!-- ← poné acá el link de Inicio -->
+              <a href="#" class="menu-link"><span>👗</span> Doná ropa</a>       <!-- ← poné acá el link de Donar -->
+              <a href="#" class="menu-link"><span>🗺️</span> Mapa</a>            <!-- ← poné acá el link del Mapa -->
+              <a href="#" class="menu-link"><span>🧵</span> Directorio</a>      <!-- ← poné acá el link del Directorio -->
+              <a href="#" class="menu-link"><span>🌱</span> Sobre nosotras</a>  <!-- ← poné acá el link de Sobre nosotras -->
+            </nav>
+          </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+ 
+    <!-- EXPLORAR -->
+    <div id="vista-explorar" class="vista">
+      <div id="search-bar">
+        <div class="search-inner">
+          <span>🔍</span>
+          <input id="search-input" type="text" placeholder="Buscar en la comunidad..." oninput="buscar(this.value)" />
+        </div>
+      </div>
+      <div id="lista-usuarias"></div>
+    </div>
+ 
+    <!-- LOGROS -->
+    <div id="vista-logros" class="vista">
+      <div id="logros-header">
+        <h2 class="logros-titulo">Mis logros 🏅</h2>
+      </div>
+      <div id="logros-inner"></div>
+    </div>
+ 
+    <!-- PERFIL (vista pública) -->
+    <div id="vista-perfil" class="vista">
+      <div id="perfil-topbar">
+        <button class="btn-volver" onclick="volverDesdePerfil()">←</button>
+        <div>
+          <div id="perfil-nav-nombre" style="font-weight:700;font-size:15px;color:var(--jungle);"></div>
+          <div id="perfil-nav-posts"  style="font-size:12px;color:var(--soft);"></div>
+        </div>
+      </div>
+      <div id="perfil-contenido"></div>
+    </div>
+ 
+    <!-- EDITOR DE PERFIL -->
+    <div id="vista-editor" class="vista">
+      <div id="editor-topbar">
+        <button class="btn-cancelar-editor" onclick="cancelarEditor()">← Cancelar</button>
+        <span class="editor-titulo">Editar perfil</span>
+        <button class="btn-guardar-editor" onclick="guardarPerfil()">Guardar</button>
+      </div>
+ 
+      <!-- portada editable -->
+      <div class="editor-portada-preview" id="editor-portada-preview" onclick="abrirModalPortada()">
+        <div class="editor-portada-overlay">📷 Cambiar portada</div>
+      </div>
+ 
+      <!-- avatar + preview info -->
+      <div class="editor-preview-info">
+        <div style="position:relative;display:inline-block;margin-top:-28px;margin-bottom:8px;">
+          <div class="avatar" id="av-editor" style="width:60px;height:60px;font-size:22px;border:3px solid #fff;"></div>
+          <label for="input-foto-perfil" style="position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--jungle);border:2px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">📷</label>
+          <input type="file" id="input-foto-perfil" accept="image/*" style="display:none" onchange="cargarFotoPerfil(this)"/>
+        </div>
+        <button class="btn-quitar-foto" id="btn-quitar-foto" onclick="quitarFotoPerfil()">Quitar foto de perfil</button>
+        <p id="editor-prev-nombre" style="font-family:Georgia,serif;font-size:16px;color:var(--jungle);font-weight:700;margin-bottom:2px;"></p>
+        <p id="editor-prev-bio"    style="font-size:12.5px;color:var(--soft);font-style:italic;margin-top:4px;"></p>
+        <p class="foto-tip">📷 Tocá el ícono de cámara para subir tu foto</p>
+      </div>
+ 
+      <div class="editor-form">
+        <label class="campo-label" for="editor-nombre">Nombre</label>
+        <input class="campo-input" type="text" id="editor-nombre" maxlength="40" oninput="actualizarEditorPreview()"/>
+ 
+        <div class="campo-header">
+          <label class="campo-label" style="margin-bottom:0">Bio</label>
+          <span class="bio-count" id="bio-count">0/100</span>
+        </div>
+        <textarea class="campo-textarea" id="editor-bio" maxlength="100" rows="3" placeholder="Contale a la comunidad quién sos..." oninput="actualizarEditorPreview()"></textarea>
+ 
+        <label class="campo-label">Mis roles</label>
+        <div class="roles-wrap" id="roles-wrap"></div>
+ 
+        <button class="btn-guardar-full" onclick="guardarPerfil()">Guardar cambios</button>
+      </div>
+ 
+      <input type="file" id="input-foto-portada" accept="image/*" style="display:none" onchange="cargarFotoPortada(this)"/>
+    </div>
+ 
+  </div><!-- /contenido -->
+ 
+</div><!-- /app -->
+ 
+<!-- MODAL PORTADA -->
+<div id="modal-portada" onclick="cerrarModalSiOverlay(event)">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <span class="modal-titulo">Elegí tu portada</span>
+      <button class="btn-cerrar-modal" onclick="cerrarModal()">✕</button>
+    </div>
+    <div class="upload-fila" onclick="document.getElementById('input-foto-portada').click()">
+      <span style="font-size:22px">📷</span>
+      <div><p>Subir foto desde mi galería</p><p>JPG, PNG — se va a ver como portada</p></div>
+    </div>
+    <p class="modal-subtitulo">O elegí un degradado</p>
+    <div class="portada-grid" id="portada-grid"></div>
+  </div>
+</div>
+<script src="js/foro.js"></script>
+</body>
+</html>
+ 
