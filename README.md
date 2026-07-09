@@ -44,3 +44,4 @@ Este proyecto se alinea con los siguientes ODS de la ONU:
 | **13** — Acción por el clima |Ayudamos a extender la vida útil de las prendas para reducir la demanda de nueva producción textil y su impacto ambiental |
 
 ---
+✦ **[Visitá EcoTrama](https://cet-programacion-asistida-con-ia-2026.github.io/proyecto-equipo6-grupoB/)**
