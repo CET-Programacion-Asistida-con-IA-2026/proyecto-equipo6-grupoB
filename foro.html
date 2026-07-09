@@ -5,21 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EcoTrama 🌿 foro comunitario</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="css/foro.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="foro.css">
 </head>
 <body>
-<div id="app">
- 
-  <!-- TOP BAR -->
-  <div id="topbar">
-    <span id="topbar-logo">EcoTrama 🌿</span>
-    <div id="user-selector-wrap">
-      <div class="avatar" id="av-topbar" style="width:24px;height:24px;font-size:9px;"></div>
-      <select id="sel-usuario" onchange="cambiarUsuario(this.value)"></select>
-    </div>
+
+<!-- ═══ NAV DEL SITIO (igual que en el resto de las páginas) ═══ -->
+<nav id="navbar">
+  <a class="nav-logo" href="index.html">EcoTrama <span>✦</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#inicio">Inicio</a></li>
+    <li><a href="foro.html">Foro</a></li>
+    <li><a href="index.html#mapa">Mapa</a></li>
+    <li><a href="directorio.html">Directorio</a></li>
+    <li><a href="sobre.html">Sobre nosotras</a></li>
+    <li id="navAuthArea">
+      <a href="#" class="btn-nav" id="btnRegistroNav" onclick="abrirRegistro('registro'); return false;">Registrate</a>
+    </li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
   </div>
- 
-  <!-- NAV PRINCIPAL -->
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#inicio" onclick="toggleMenu()">Inicio</a>
+  <a href="foro.html" onclick="toggleMenu()">Foro</a>
+  <a href="index.html#mapa" onclick="toggleMenu()">Mapa</a>
+  <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
+  <a href="sobre.html" onclick="toggleMenu()">Sobre nosotras</a>
+  <a href="#" id="btnRegistroMobile" onclick="toggleMenu(); abrirRegistro('registro'); return false;" class="btn-nav-m">Registrate</a>
+</div>
+
+<div id="app">
+
+  <!-- NAV PRINCIPAL (pestañas internas del foro) -->
   <nav id="main-nav">
     <button class="nav-btn activo" id="nav-feed"    onclick="irA('feed',this)">
       <span class="nav-icon">🏠</span><span class="nav-label">Inicio</span>
@@ -69,27 +90,6 @@
           <!-- Posts -->
           <div id="lista-posts"></div>
         </div>
- 
-        <aside class="feed-sidebar">
-          <!-- EcoConsejo -->
-          <div id="eco-panel">
-            <span id="eco-icono"></span>
-            <p class="eco-label">🌿 EcoConsejo</p>
-            <p id="eco-texto"></p>
-            <div id="eco-dots"></div>
-
-             <div id="menu-secciones">
-            <p class="menu-label">🧭 Explorá RAÍCES</p>
-            <nav class="menu-links">
-              <a href="#" class="menu-link"><span>🏠</span> Inicio</a>          <!-- ← poné acá el link de Inicio -->
-              <a href="#" class="menu-link"><span>👗</span> Doná ropa</a>       <!-- ← poné acá el link de Donar -->
-              <a href="#" class="menu-link"><span>🗺️</span> Mapa</a>            <!-- ← poné acá el link del Mapa -->
-              <a href="#" class="menu-link"><span>🧵</span> Directorio</a>      <!-- ← poné acá el link del Directorio -->
-              <a href="#" class="menu-link"><span>🌱</span> Sobre nosotras</a>  <!-- ← poné acá el link de Sobre nosotras -->
-            </nav>
-          </div>
-          </div>
-        </aside>
       </div>
     </div>
  
@@ -188,6 +188,70 @@
     <div class="portada-grid" id="portada-grid"></div>
   </div>
 </div>
+
+<!-- MODAL REGISTRO / LOGIN (igual que en el resto del sitio) -->
+<div class="modal-overlay" id="modal-registro">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarRegistro()">✕</button>
+    <div id="reg-form-content">
+      <div class="modal-icon">🌸</div>
+      <h2>Sumate a EcoTrama</h2>
+      <p>Creá tu cuenta y empezá a ser parte de la comunidad.</p>
+      <div class="field"><label for="reg-nombre">Nombre</label><input type="text" id="reg-nombre" placeholder="¿Cómo te llamás?"/></div>
+      <div class="field"><label for="reg-email">Correo electrónico</label><input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="off"/></div>
+      <div class="field"><label for="reg-password">Contraseña</label><input type="password" id="reg-password" placeholder="Mínimo 6 caracteres"/></div>
+      <p class="reg-error" id="reg-error"></p>
+      <div class="field">
+        <label>¿Cómo querés participar?</label>
+        <div class="reg-tipo-opciones">
+          <label class="tipo-card">
+            <input type="radio" name="reg-tipo" value="modista">
+            <span class="tipo-card-inner">
+              <span class="tipo-icon">🧵</span>
+              <span class="tipo-label">Modista</span>
+            </span>
+          </label>
+          <label class="tipo-card">
+            <input type="radio" name="reg-tipo" value="usuaria">
+            <span class="tipo-card-inner">
+              <span class="tipo-icon">👤</span>
+              <span class="tipo-label">Usuaria</span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <button class="btn-enviar" onclick="registrar()">Crear cuenta 🌿</button>
+      <p class="reg-switch">
+        ¿Ya tenés cuenta?
+        <a href="#" onclick="mostrarLogin(); return false;">Iniciar sesión</a>
+      </p>
+    </div>
+    <div id="reg-login-content" style="display:none;">
+      <div class="modal-icon">🌿</div>
+      <h2>Bienvenida de nuevo</h2>
+      <p>Iniciá sesión para seguir siendo parte de la comunidad.</p>
+      <div class="field"><label for="login-email">Correo electrónico</label><input type="email" id="login-email" placeholder="tu@correo.com"></div>
+      <div class="field"><label for="login-password">Contraseña</label><input type="password" id="login-password" placeholder="Tu contraseña"></div>
+      <p class="reg-error" id="login-error"></p>
+      <button class="btn-enviar" onclick="iniciarSesion()">Iniciar sesión 🌱</button>
+      <p class="reg-switch">
+        ¿No tenés cuenta?
+        <a href="#" onclick="mostrarRegistro(); return false;">Creá una</a>
+      </p>
+    </div>
+    <div id="reg-thanks" style="display:none; flex-direction:column; align-items:center; text-align:center; padding:1rem 0;">
+      <div>
+        <div class="ty-icon">🌱</div>
+        <h4 style="font-family:Playfair Display,serif;font-size:1.4rem;color:#3a3820;margin:.6rem 0 .4rem;">¡Bienvenida, <span id="reg-thanks-name"></span>!</h4>
+        <p style="color:#6b6445;font-size:.92rem;">Tu cuenta fue creada. Ya sos parte de la comunidad EcoTrama.</p>
+        <button class="btn-enviar" onclick="cerrarRegistro()" style="margin-top:1.2rem;">Explorar →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/nav.js"></script>
+<script src="js/registro.js"></script>
 <script src="js/foro.js"></script>
 </body>
 </html>

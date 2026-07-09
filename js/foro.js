@@ -64,14 +64,51 @@ let ecoIdx         = 0;
 ════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded", () => {
   ecoIdx = Math.floor(Math.random() * ECO_CONSEJOS.length);
-  poblarSelector();
-  renderAvTopbar();
+  cargarUsuariaLogueada();
   renderAvComposer();
   renderPosts();
   renderExplorar();
   iniciarEco();
   iniciarPortadaGrid();
 });
+
+/* ════════════════════════════════════════
+   USUARIA REAL (conectada con el registro)
+════════════════════════════════════════ */
+function cargarUsuariaLogueada() {
+  const guardado = localStorage.getItem('ecotramaUsuarioActual');
+  if (!guardado) {
+    // Todavía no se registró ni inició sesión: le pedimos que lo haga
+    if (typeof abrirRegistro === "function") abrirRegistro();
+    return;
+  }
+  const datos = JSON.parse(guardado);
+  let usuaria = USUARIAS.find(u => u.id === 'yo');
+  if (!usuaria) {
+    usuaria = {
+      id: 'yo',
+      nombre: datos.nombre,
+      handle: '@' + datos.nombre.toLowerCase().replace(/\s+/g, '.'),
+      initials: datos.nombre.slice(0, 2).toUpperCase(),
+      grad: 'linear-gradient(135deg,#D88AAE,#F7D0D5)',
+      photo: null,
+      portada: 'linear-gradient(135deg,#F7D0D5 0%,#D88AAE 50%,#893941 100%)',
+      portadaFoto: null,
+      bio: '',
+      roles: datos.tipo === 'modista' ? ['Reparadora'] : ['Compradora'],
+      zona: '',
+      seguidoras: 0,
+      siguiendo: 0,
+      logros: []
+    };
+    USUARIAS.unshift(usuaria);
+  } else {
+    // ya existía (por ejemplo, volvió a entrar): actualizamos nombre/tipo por si cambiaron
+    usuaria.nombre = datos.nombre;
+    usuaria.roles  = datos.tipo === 'modista' ? ['Reparadora'] : ['Compradora'];
+  }
+  usuarioActivo = 'yo';
+}
  
 /* ════════════════════════════════════════
    UTILS

@@ -1,4 +1,4 @@
-root {
+:root {
   --cloud:   #FAF6EE;
   --peony:   #F7D0D5;
   --rose:    #D88AAE;
@@ -86,7 +86,7 @@ body {
 /* ── BOTTOM NAV ── */
 #main-nav {
   position: sticky;
-  top: 48px;
+  top: 64px;
   background: rgba(255,255,255,.97);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
@@ -144,18 +144,14 @@ body {
  
 /* ── LAYOUT DE DOS COLUMNAS (feed + sidebar) ── */
 .feed-layout {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 20px;
-  align-items: start;
+  max-width: 640px;
+  margin: 0 auto;
   padding: 20px 16px 0;
 }
 .feed-main { min-width: 0; }
-.feed-sidebar { position: sticky; top: 108px; }
  
 @media (max-width: 700px) {
-  .feed-layout { grid-template-columns: 1fr; padding: 14px 12px 0; }
-  .feed-sidebar { position: static; }
+  .feed-layout { padding: 14px 12px 0; }
 }
  
 /* ── COMPOSER ── */
@@ -1082,6 +1078,19 @@ body {
   margin-top: 8px;
 }
  
+/* ── AJUSTE PARA EL NAVBAR FIJO DEL SITIO (no hay hero en esta página) ── */
+nav#navbar {
+  background: rgba(250,246,238,.97) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(141,139,76,.15) !important;
+}
+nav#navbar .nav-logo,
+nav#navbar .nav-logo span,
+nav#navbar .nav-links a { color: var(--jungle) !important; }
+nav#navbar .hamburger span { background: var(--jungle) !important; }
+
+#app { padding-top: 64px; }
+
 /* ── VACÍO ── */
 .vacio {
   padding: 40px 16px;
