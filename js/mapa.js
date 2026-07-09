@@ -1,5 +1,5 @@
 // ── Mapa interactivo EcoTrama ──
-// Usa Leaflet.js (cargado desde CDN en inicio.html)
+// Usa Leaflet.js (cargado desde CDN en index.html)
 
 let mapaInicializado = false;
 
