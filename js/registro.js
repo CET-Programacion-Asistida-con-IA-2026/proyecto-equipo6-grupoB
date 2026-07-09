@@ -2,10 +2,121 @@
 
 let ropaCanvas = null; // referencia global al canvas de animación
 
-function abrirRegistro() {
+// ── Helpers de almacenamiento ──
+function obtenerUsuarios() {
+  const data = localStorage.getItem('ecotramaUsuarios');
+  return data ? JSON.parse(data) : [];
+}
+
+function guardarUsuarios(usuarios) {
+  localStorage.setItem('ecotramaUsuarios', JSON.stringify(usuarios));
+}
+
+// ── Estado de sesión ──
+function renderAuthUI() {
+  const dataGuardada = localStorage.getItem('ecotramaUsuarioActual');
+  const usuario = dataGuardada ? JSON.parse(dataGuardada) : null;
+
+  const navArea = document.getElementById('navAuthArea');
+  const mobileBtn = document.getElementById('btnRegistroMobile');
+
+  if (!usuario) {
+    if (navArea) {
+      navArea.innerHTML = `<a href="#" class="btn-nav" id="btnRegistroNav" onclick="abrirRegistro('registro'); return false;">Registrate</a>`;
+    }
+
+    if (mobileBtn) {
+      mobileBtn.textContent = 'Registrate';
+      mobileBtn.onclick = (e) => {
+        toggleMenu();
+        abrirRegistro('registro');
+        e.preventDefault();
+        return false;
+      };
+    }
+
+    return;
+  }
+
+  const esModista = usuario.tipo === 'modista';
+  const etiqueta = esModista ? 'Modista 🧵' : 'Usuaria 👤';
+  const colorFondo = esModista ? '#dae097' : '#afb8cd';
+
+  if (navArea) {
+    navArea.innerHTML = `
+      <div style="position:relative; display:inline-block;">
+        <a href="#" id="chipUsuario" onclick="toggleMenuUsuario(); return false;"
+     style="
+       display:flex;
+       align-items:center;
+       gap:8px;
+       padding:8px 14px;
+       border-radius:999px;
+       background:#fbf7df;
+       border:1px solid #d8d0a4;
+       box-shadow:0 2px 8px rgba(0,0,0,.08);
+       cursor:pointer;
+       text-decoration:none;
+       color:#3a3820;
+   ">
+          <span style="font-weight:600;">${usuario.nombre}</span>
+          <span style="font-size:.72rem; font-weight:700; padding:3px 10px; border-radius:20px; background:${colorFondo}; color:#3a3820;">${etiqueta}</span>
+        </a>
+
+        <div id="menuUsuario"
+             style="display:none; position:absolute; right:0; top:130%; background:#fff; border:1px solid #e5e0cf; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.12); min-width:150px; overflow:hidden; z-index:50;">
+          <a href="#"
+             onclick="cerrarSesion(); return false;"
+             style="display:block; padding:10px 14px; font-size:.85rem; color:#3a3820; text-decoration:none;">
+             Cerrar sesión
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  if (mobileBtn) {
+    mobileBtn.textContent = `${usuario.nombre} · ${etiqueta}`;
+    mobileBtn.onclick = (e) => {
+      cerrarSesion();
+      e.preventDefault();
+      return false;
+    };
+  }
+}
+
+function toggleMenuUsuario() {
+  const menu = document.getElementById('menuUsuario');
+  if (menu) {
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  }
+}
+
+document.addEventListener('click', (e) => {
+  const chip = document.getElementById('chipUsuario');
+  const menu = document.getElementById('menuUsuario');
+
+  if (menu && chip && !chip.contains(e.target) && !menu.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+
+function cerrarSesion() {
+  localStorage.removeItem('ecotramaUsuarioActual');
+  renderAuthUI();
+}
+
+function abrirRegistro(vista) {
   document.getElementById('modal-registro').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  if (vista === 'login') {
+    mostrarLogin();
+  } else {
+    mostrarRegistro();
+  }
 }
+
 
 function cerrarRegistro() {
   // Eliminar canvas de animación si sigue activo
@@ -13,15 +124,40 @@ function cerrarRegistro() {
     document.body.removeChild(ropaCanvas);
     ropaCanvas = null;
   }
+
   document.getElementById('modal-registro').classList.remove('open');
   document.body.style.overflow = '';
+
   document.getElementById('reg-form-content').style.display = 'block';
+  document.getElementById('reg-login-content').style.display = 'none';
   document.getElementById('reg-thanks').style.display = 'none';
+
   document.getElementById('reg-nombre').value = '';
   document.getElementById('reg-email').value = '';
   document.getElementById('reg-password').value = '';
   document.getElementById('reg-error').textContent = '';
+
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').textContent = '';
 }
+
+function mostrarLogin() {
+  document.getElementById('reg-form-content').style.display = 'none';
+  document.getElementById('reg-thanks').style.display = 'none';
+  document.getElementById('reg-login-content').style.display = 'block';
+  document.getElementById('reg-error').textContent = '';
+  document.getElementById('login-error').textContent = '';
+}
+
+function mostrarRegistro() {
+  document.getElementById('reg-login-content').style.display = 'none';
+  document.getElementById('reg-thanks').style.display = 'none';
+  document.getElementById('reg-form-content').style.display = 'block';
+  document.getElementById('reg-error').textContent = '';
+  document.getElementById('login-error').textContent = '';
+}
+
 
 function registrar() {
   const nombre   = document.getElementById('reg-nombre').value.trim();
@@ -42,6 +178,35 @@ function registrar() {
     error.textContent = 'La contraseña debe tener al menos 6 caracteres 🔒';
     return;
   }
+  // Guardar usuario
+  const tipoSeleccionado = document.querySelector('input[name="reg-tipo"]:checked');
+  if (!tipoSeleccionado) {
+  error.textContent = 'Elegí si sos modista o usuaria 🌿';
+  return;
+}
+  const tipo = tipoSeleccionado.value;
+
+  const usuarios = obtenerUsuarios();
+
+const yaExiste = usuarios.some(
+  u => u.email.toLowerCase() === email.toLowerCase()
+);
+
+if (yaExiste) {
+  error.textContent = 'Ya existe una cuenta con ese correo. Probá iniciar sesión 🌱';
+  return;
+}
+
+const usuario = { nombre, email, password, tipo };
+
+usuarios.push(usuario);
+
+guardarUsuarios(usuarios);
+
+localStorage.setItem('ecotramaUsuarioActual', JSON.stringify(usuario));
+
+// Actualizar el navbar inmediatamente
+renderAuthUI();
 
   // Mostrar pantalla de gracias
   error.textContent = '';
@@ -49,8 +214,42 @@ function registrar() {
   document.getElementById('reg-form-content').style.display = 'none';
   document.getElementById('reg-thanks').style.display = 'flex';
 
+
   // ✨ Lanzar animación de ropa cayendo en TODA la pantalla
   lanzarRopaCayendo();
+}
+
+function iniciarSesion() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const error = document.getElementById('login-error');
+
+  if (!email || !password) {
+    error.textContent = 'Completá tu correo y contraseña 🌿';
+    return;
+  }
+
+  const usuarios = obtenerUsuarios();
+
+  const usuario = usuarios.find(
+    u =>
+      u.email.toLowerCase() === email.toLowerCase() &&
+      u.password === password
+  );
+
+  if (!usuario) {
+    error.textContent = 'Correo o contraseña incorrectos 🔒';
+    return;
+  }
+
+  localStorage.setItem(
+    'ecotramaUsuarioActual',
+    JSON.stringify(usuario)
+  );
+
+  error.textContent = '';
+  renderAuthUI();
+  cerrarRegistro();
 }
 
 function lanzarRopaCayendo() {
@@ -130,10 +329,15 @@ function lanzarRopaCayendo() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  renderAuthUI();
+
   const overlay = document.getElementById('modal-registro');
+
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) cerrarRegistro();
   });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') cerrarRegistro();
   });

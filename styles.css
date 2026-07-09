@@ -331,12 +331,18 @@ nav.scrolled .btn-nav { background: var(--jungle); }
 }
 .field { margin-bottom: 1.2rem; }
 .field label { display: block; font-size: .83rem; font-weight: 600; color: var(--jungle); margin-bottom: .4rem; }
-.field input, .field textarea {
-  width: 100%; padding: .75rem 1rem;
-  border: 1.5px solid rgba(141,139,76,.2); border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-size: .92rem;
-  color: var(--text); background: var(--cloud); resize: none;
-  transition: border-color .2s; outline: none;
+.field input:not([type="radio"]):not([type="checkbox"]), .field textarea {
+  width: 100%;
+  padding: .75rem 1rem;
+  border: 1.5px solid rgba(141,139,76,.2);
+  border-radius: 10px;
+  background: var(--cloud);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .92rem;
+  transition: border-color .2s;
+  outline: none;
+}
 }
 .field input:focus, .field textarea:focus { border-color: var(--dusty-rose); }
 .field textarea { height: 110px; }
@@ -743,3 +749,83 @@ footer a { color: rgba(250,246,238,.6); text-decoration: none; }
   .modal-box p:not(.reg-error) { color:#6b6445; font-size:.92rem; margin-bottom:1.4rem; }
   .reg-error { color:#893941; font-size:.85rem; min-height:1.1rem; margin-bottom:.5rem; }
   
+  /* ── Tarjetas: Modista / Usuaria ── */
+.reg-tipo-opciones {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.tipo-card {
+  position: relative;
+  flex: 1;
+  cursor: pointer;
+}
+
+.tipo-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.tipo-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px 10px;
+  border: 2px solid #e5e0cf;
+  border-radius: 14px;
+  background: #fbfaf5;
+  text-align: center;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.tipo-card:hover .tipo-card-inner {
+  border-color: #cfd6ab;
+  transform: translateY(-1px);
+}
+
+.tipo-card input:checked + .tipo-card-inner {
+  border-color: #b7c26a;
+  background: #eef1d9;
+  box-shadow: 0 3px 12px rgba(183, 194, 106, .28);
+  transform: translateY(-2px);
+}
+
+.tipo-card input:focus-visible + .tipo-card-inner {
+  outline: 2px solid #b7c26a;
+  outline-offset: 2px;
+}
+
+.tipo-icon {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.tipo-label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: #3a3820;
+}
+
+/* ── Link para alternar entre "Crear cuenta" / "Iniciar sesión" ── */
+.reg-switch {
+  text-align: center;
+  font-size: .85rem;
+  color: #6b6445;
+  margin-top: 14px;
+}
+
+.reg-switch a {
+  color: #7c8a3c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.reg-switch a:hover {
+  text-decoration: underline;
+}

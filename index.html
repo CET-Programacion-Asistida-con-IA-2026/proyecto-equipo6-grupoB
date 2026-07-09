@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="registro.css"/>
 </head>
 <body>
 
@@ -20,7 +21,7 @@
     <li><a href="#mapa">Mapa</a></li>
     <li><a href="directorio.html">Directorio</a></li>
     <li><a href="sobre.html">Sobre nosotras</a></li>
-    <li><a href="#" class="btn-nav" onclick="abrirRegistro(); return false;">Registrate</a></li>
+    <li id="navAuthArea"><a href="#" class="btn-nav" id="btnRegistroNav" onclick="abrirRegistro('registro'); return false;">Registrate</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -33,7 +34,8 @@
   <a href="#mapa" onclick="toggleMenu()">Mapa</a>
   <a href="directorio.html" onclick="toggleMenu()">Directorio</a>
   <a href="sobre.html" onclick="toggleMenu()">Sobre nosotras</a>
-  <a href="#" class="btn-nav-m" onclick="toggleMenu(); abrirRegistro(); return false;">Registrate</a>
+  <a href="#" class="btn-nav-m" id="btnLoginMobile" onclick="toggleMenu(); abrirRegistro('login'); return false;">Iniciar sesión</a>
+  <a href="#" class="btn-nav-m" id="btnRegistroMobile" onclick="toggleMenu(); abrirRegistro('registro'); return false;">Registrate</a>
 </div>
 
 <!-- HERO + CARRUSEL -->
@@ -201,8 +203,64 @@
       <div class="field"><label for="reg-email">Correo electrónico</label><input type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="off"/></div>
       <div class="field"><label for="reg-password">Contraseña</label><input type="password" id="reg-password" placeholder="Mínimo 6 caracteres"/></div>
       <p class="reg-error" id="reg-error"></p>
-      <button class="btn-enviar" onclick="registrar()">Crear cuenta 🌿</button>
+      <div class="field">
+       <label>¿Cómo querés participar?</label>
+      <div class="reg-tipo-opciones">
+       <label class="tipo-card">
+       <input type="radio" name="reg-tipo" value="modista">
+      <span class="tipo-card-inner">
+       <span class="tipo-icon">🧵</span>
+      <span class="tipo-label">Modista</span>
+    </span>
+  </label>
+
+  <label class="tipo-card">
+    <input type="radio" name="reg-tipo" value="usuaria">
+    <span class="tipo-card-inner">
+      <span class="tipo-icon">👤</span>
+      <span class="tipo-label">Usuaria</span>
+    </span>
+  </label>
+</div>
+ </div>
+    <button class="btn-enviar" onclick="registrar()">Crear cuenta 🌿</button>
+    <p class="reg-switch">
+       ¿Ya tenés cuenta?
+     <a href="#" onclick="mostrarLogin(); return false;">
+       Iniciar sesión
+    </a>
+   </p>
     </div>
+    <div id="reg-login-content" style="display:none;">
+  <div class="modal-icon">🌿</div>
+
+  <h2>Bienvenida de nuevo</h2>
+
+  <p>Iniciá sesión para seguir siendo parte de la comunidad.</p>
+
+  <div class="field">
+    <label for="login-email">Correo electrónico</label>
+    <input type="email" id="login-email" placeholder="tu@correo.com">
+  </div>
+
+  <div class="field">
+    <label for="login-password">Contraseña</label>
+    <input type="password" id="login-password" placeholder="Tu contraseña">
+  </div>
+
+  <p class="reg-error" id="login-error"></p>
+
+  <button class="btn-enviar" onclick="iniciarSesion()">
+    Iniciar sesión 🌱
+  </button>
+
+  <p class="reg-switch">
+    ¿No tenés cuenta?
+    <a href="#" onclick="mostrarRegistro(); return false;">
+      Creá una
+    </a>
+  </p>
+</div>
     <div id="reg-thanks" style="display:none; flex-direction:column; align-items:center; text-align:center; padding:1rem 0;">
       <div>
         <div class="ty-icon">🌱</div>
