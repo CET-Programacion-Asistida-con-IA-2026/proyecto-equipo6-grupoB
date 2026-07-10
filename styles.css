@@ -82,6 +82,29 @@ nav.scrolled .btn-nav { background: var(--jungle); }
 .btn-nav::after { display: none !important; }
 .btn-nav:hover { background: var(--burgundy) !important; transform: translateY(-1px); }
 
+/* ── BADGE DE USUARIA LOGUEADA (reemplaza el botón Registrate) ── */
+.nav-user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--jungle);
+  color: #fff !important;
+  padding: .45rem 1rem;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.nav-user-badge:hover { background: var(--burgundy); }
+.nav-user-tipo {
+  background: rgba(255,255,255,.25);
+  padding: .1rem .55rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
 /* Hamburger */
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
