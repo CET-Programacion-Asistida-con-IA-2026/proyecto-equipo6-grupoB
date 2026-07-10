@@ -720,7 +720,7 @@ body {
  
 .perfil-avatar-wrap {
   display: inline-block;
-  margin-top: -32px;
+  margin-top: -1px;   
   margin-bottom: 10px;
 }
  
@@ -1032,6 +1032,31 @@ body {
 }
  
 .portada-swatch.sel .portada-check { display: flex; }
+
+/* ── MODAL AVATAR ── */
+#modal-avatar {
+  position: fixed; inset: 0; background: rgba(58,50,40,.55); z-index: 200;
+  display: none; align-items: flex-end; justify-content: center;
+}
+#modal-avatar.visible { display: flex; }
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.avatar-swatch {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  transition: border-color .15s;
+}
+.avatar-swatch.sel { border-color: var(--jungle); }
+.avatar-swatch.sel .portada-check { display: flex; border-radius: 50%; }
  
 /* ── FOTO UPLOAD ── */
 .upload-fila {
