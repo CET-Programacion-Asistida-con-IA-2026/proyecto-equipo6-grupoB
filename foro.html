@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<!-- ═══ NAV DEL SITIO (igual que en el resto de las páginas) ═══ -->
+<!-- ═══ NAV DEL SITIO  ═══ -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">EcoTrama <span>✦</span></a>
   <ul class="nav-links">
@@ -40,7 +40,7 @@
 
 <div id="app">
 
-  <!-- NAV PRINCIPAL (pestañas internas del foro) -->
+  <!-- NAV PRINCIPAL -->
   <nav id="main-nav">
     <button class="nav-btn activo" id="nav-feed"    onclick="irA('feed',this)">
       <span class="nav-icon">🏠</span><span class="nav-label">Inicio</span>
@@ -129,7 +129,6 @@
       <div id="editor-topbar">
         <button class="btn-cancelar-editor" onclick="cancelarEditor()">← Cancelar</button>
         <span class="editor-titulo">Editar perfil</span>
-        <button class="btn-guardar-editor" onclick="guardarPerfil()">Guardar</button>
       </div>
  
       <!-- portada editable -->
@@ -141,7 +140,7 @@
       <div class="editor-preview-info">
         <div style="position:relative;display:inline-block;margin-top:-28px;margin-bottom:8px;">
           <div class="avatar" id="av-editor" style="width:60px;height:60px;font-size:22px;border:3px solid #fff;"></div>
-          <label for="input-foto-perfil" style="position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--jungle);border:2px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">📷</label>
+          <div onclick="abrirModalAvatar()" style="position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--jungle);border:2px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">📷</div>
           <input type="file" id="input-foto-perfil" accept="image/*" style="display:none" onchange="cargarFotoPerfil(this)"/>
         </div>
         <button class="btn-quitar-foto" id="btn-quitar-foto" onclick="quitarFotoPerfil()">Quitar foto de perfil</button>
@@ -159,10 +158,8 @@
           <span class="bio-count" id="bio-count">0/100</span>
         </div>
         <textarea class="campo-textarea" id="editor-bio" maxlength="100" rows="3" placeholder="Contale a la comunidad quién sos..." oninput="actualizarEditorPreview()"></textarea>
- 
-        <label class="campo-label">Mis roles</label>
-        <div class="roles-wrap" id="roles-wrap"></div>
- 
+        <label class="campo-label" for="editor-zona">Ubicación</label>
+        <input class="campo-input" type="text" id="editor-zona" maxlength="30" placeholder="Ej: CABA, La Plata..."/>
         <button class="btn-guardar-full" onclick="guardarPerfil()">Guardar cambios</button>
       </div>
  
@@ -188,6 +185,23 @@
     <div class="portada-grid" id="portada-grid"></div>
   </div>
 </div>
+
+<!-- MODAL AVATAR -->
+<div id="modal-avatar" onclick="cerrarModalAvatarSiOverlay(event)">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <span class="modal-titulo">Elegí tu foto de perfil</span>
+      <button class="btn-cerrar-modal" onclick="cerrarModalAvatar()">✕</button>
+    </div>
+    <div class="upload-fila" onclick="document.getElementById('input-foto-perfil').click()">
+      <span style="font-size:22px">📷</span>
+      <div><p>Subir foto desde mi galería</p><p>JPG, PNG — se va a ver como tu avatar</p></div>
+    </div>
+    <p class="modal-subtitulo">O elegí una imagen</p>
+    <div class="avatar-grid" id="avatar-grid"></div>
+  </div>
+</div>
+
 
 <!-- MODAL REGISTRO / LOGIN (igual que en el resto del sitio) -->
 <div class="modal-overlay" id="modal-registro">

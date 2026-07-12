@@ -274,6 +274,52 @@ background:
     .contact-opt-text strong { display: block; font-size: .88rem; font-weight: 600; color: var(--text); }
     .contact-opt-text span { font-size: .78rem; color: var(--text-soft); }
 
+/* ── Formulario "Quiero aparecer aquí" ── */
+.form-group { margin-bottom: 1.1rem; }
+.form-group label {
+  display: block; font-size: .82rem; font-weight: 600;
+  color: var(--text); margin-bottom: .4rem;
+}
+.form-group input, .form-group textarea {
+  width: 100%; padding: .7rem .9rem;
+  border: 1.5px solid rgba(141,139,76,.2);
+  border-radius: 12px; font-family: 'DM Sans', sans-serif;
+  font-size: .9rem; color: var(--text);
+  background: var(--cloud); outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-group textarea { resize: vertical; min-height: 70px; }
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--jungle);
+  box-shadow: 0 0 0 3px rgba(141,139,76,.12);
+}
+.form-hint { font-size: .75rem; color: var(--text-soft); margin-bottom: .6rem; }
+.categorias-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .3rem; }
+.categoria-chip {
+  padding: .45rem 1rem; border-radius: 999px;
+  border: 1.5px solid rgba(141,139,76,.2);
+  background: #fff; color: var(--text-soft);
+  font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500;
+  cursor: pointer; transition: all .2s;
+}
+.categoria-chip:hover { border-color: var(--jungle); color: var(--jungle); }
+.categoria-chip.selected {
+  background: var(--jungle); color: #fff; border-color: var(--jungle);
+}
+.categoria-chip:disabled { opacity: .4; cursor: not-allowed; }
+.form-error { color: var(--cacao); font-size: .8rem; min-height: 1.1rem; margin-top: .5rem; }
+.btn-enviar-registro {
+  width: 100%; background: var(--jungle); color: #fff;
+  border: none; border-radius: 999px; padding: .8rem;
+  font-size: .9rem; font-weight: 600; cursor: pointer;
+  margin-top: .5rem; transition: background .2s;
+}
+.btn-enviar-registro:hover { background: var(--cacao); }
+.registro-thanks { display: none; text-align: center; padding: 1rem 0; }
+.registro-thanks .emoji { font-size: 2.4rem; margin-bottom: .8rem; }
+.registro-thanks h4 { font-family: 'Playfair Display', serif; color: var(--jungle); margin-bottom: .5rem; }
+.registro-thanks p { color: var(--text-soft); font-size: .88rem; line-height: 1.6; }
+
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
     .reveal.visible { opacity: 1; transform: none; }

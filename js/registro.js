@@ -65,11 +65,16 @@ function renderAuthUI() {
 
         <div id="menuUsuario"
              style="display:none; position:absolute; right:0; top:130%; background:#fff; border:1px solid #e5e0cf; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.12); min-width:150px; overflow:hidden; z-index:50;">
-          <a href="#"
-             onclick="cerrarSesion(); return false;"
-             style="display:block; padding:10px 14px; font-size:.85rem; color:#3a3820; text-decoration:none;">
-             Cerrar sesión
-          </a>
+           <a href="#"
+             onclick="irAMiPerfil(); return false;"
+             style="display:block; padding:10px 14px; font-size:.85rem; color:#3a3820; text-decoration:none; border-bottom:1px solid #eee;">
+             Mi perfil
+           </a>
+           <a href="#"
+            onclick="cerrarSesion(); return false;"
+            style="display:block; padding:10px 14px; font-size:.85rem; color:#3a3820; text-decoration:none;">
+            Cerrar sesión
+           </a>
         </div>
       </div>
     `;
@@ -342,3 +347,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') cerrarRegistro();
   });
 });
+// Perfil 
+function irAMiPerfil() {
+  if (typeof verMiPerfil === 'function') {
+    verMiPerfil();
+  } else {
+    window.location.href = 'foro.html?perfil=1';
+  }
+}

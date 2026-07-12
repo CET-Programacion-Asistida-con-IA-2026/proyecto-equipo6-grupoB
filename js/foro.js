@@ -57,7 +57,6 @@ let tipoActual     = "texto";
 let tabActual      = "feed";
 let perfilViendo   = null;
 let editorDraft    = {};
-let ecoIdx         = 0;
  
 /* ════════════════════════════════════════
    INIT
@@ -68,8 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAvComposer();
   renderPosts();
   renderExplorar();
-  iniciarEco();
   iniciarPortadaGrid();
+  iniciarAvatarGrid();
+  const params = new URLSearchParams(window.location.search);
+if (params.get('perfil') === '1') {
+  verMiPerfil();
+}
 });
 
 /* ════════════════════════════════════════
@@ -256,44 +259,6 @@ function publicar() {
 }
  
 /* ════════════════════════════════════════
-   ECOCONSEJO
-════════════════════════════════════════ */
-function iniciarEco() {
-  mostrarEco();
-  renderDots();
-  setInterval(() => {
-    const el = document.getElementById("eco-texto");
-    el.classList.add("fade");
-    setTimeout(() => {
-      ecoIdx = (ecoIdx + 1) % ECO_CONSEJOS.length;
-      mostrarEco();
-      el.classList.remove("fade");
-      actualizarDots();
-    }, 400);
-  }, 8000);
-}
- 
-function mostrarEco() {
-  const c = ECO_CONSEJOS[ecoIdx];
-  document.getElementById("eco-icono").textContent = c.icon;
-  document.getElementById("eco-texto").textContent = c.texto;
-}
- 
-function renderDots() {
-  const n = Math.min(5, ECO_CONSEJOS.length);
-  document.getElementById("eco-dots").innerHTML =
-    Array.from({length:n}, (_,i) => `<div class="eco-dot${i===ecoIdx%n?" on":""}" id="dot${i}"></div>`).join("");
-}
- 
-function actualizarDots() {
-  const n = Math.min(5, ECO_CONSEJOS.length);
-  for (let i = 0; i < n; i++) {
-    const d = document.getElementById("dot" + i);
-    if (d) d.className = "eco-dot" + (i === ecoIdx % n ? " on" : "");
-  }
-}
- 
-/* ════════════════════════════════════════
    POSTS
 ════════════════════════════════════════ */
 function renderPosts(lista, contenedorId = "lista-posts") {
@@ -437,9 +402,6 @@ function renderExplorar(q = "") {
       <div>
         <p class="user-row-nombre">${esc(u.nombre)}</p>
         <p class="user-row-handle">${u.handle} · 📍 ${u.zona}</p>
-        <div class="user-row-roles">
-          ${u.roles.map(r=>`<span class="rol-chip">${r}</span>`).join("")}
-        </div>
       </div>
     </div>`).join("");
 }
@@ -512,9 +474,6 @@ function renderPerfil(uid) {
       <p class="perfil-handle">${u.handle}</p>
       ${u.bio ? `<p class="perfil-bio">${esc(u.bio)}</p>` : ""}
       <p class="perfil-zona">📍 ${u.zona}</p>
-      <div class="perfil-roles">
-        ${u.roles.map(r=>`<span class="perfil-rol-chip">${r}</span>`).join("")}
-      </div>
       <div class="perfil-stats">
         <span><strong>${u.seguidoras}</strong> seguidoras</span>
         <span><strong>${u.siguiendo}</strong> siguiendo</span>
@@ -545,10 +504,11 @@ function abrirEditor() {
   // campos
   document.getElementById("editor-nombre").value = u.nombre;
   document.getElementById("editor-bio").value    = u.bio || "";
+  document.getElementById("editor-zona").value   = u.zona || "";
   document.getElementById("bio-count").textContent = `${(u.bio||"").length}/100`;
   document.getElementById("btn-quitar-foto").style.display = u.photo ? "block" : "none";
   actualizarEditorPreview();
-  renderRolesEditor();
+ 
  
   document.querySelectorAll(".vista").forEach(v => v.classList.remove("activa"));
   document.getElementById("vista-editor").classList.add("activa");
@@ -564,19 +524,6 @@ function actualizarEditorPreview() {
   const cnt = document.getElementById("bio-count");
   cnt.textContent = `${bio.length}/100`;
   cnt.className = "bio-count" + (bio.length > 90 ? " warn" : "");
-}
- 
-function renderRolesEditor() {
-  document.getElementById("roles-wrap").innerHTML = ROLES_OPC.map(r => {
-    const on = editorDraft.roles.includes(r);
-    return `<button class="rol-toggle${on?" on":""}" onclick="toggleRolEditor('${r}',this)">${r}</button>`;
-  }).join("");
-}
- 
-function toggleRolEditor(rol, btn) {
-  const i = editorDraft.roles.indexOf(rol);
-  if (i >= 0) { editorDraft.roles.splice(i,1); btn.classList.remove("on"); }
-  else         { editorDraft.roles.push(rol);   btn.classList.add("on"); }
 }
  
 function cargarFotoPerfil(input) {
@@ -616,11 +563,10 @@ function guardarPerfil() {
   const u = getUser(usuarioActivo);
   u.nombre      = document.getElementById("editor-nombre").value.trim() || u.nombre;
   u.bio         = document.getElementById("editor-bio").value.trim();
-  u.roles       = [...editorDraft.roles];
+  u.zona        = document.getElementById("editor-zona").value.trim();
   u.photo       = editorDraft.photo;
   u.portada     = editorDraft.portada || u.portada;
   u.portadaFoto = editorDraft.portadaFoto;
-  renderAvTopbar();
   renderAvComposer();
   verPerfil(usuarioActivo);
   document.getElementById("nav-perfil").classList.add("activo");
@@ -637,7 +583,47 @@ function iniciarPortadaGrid() {
       <div class="portada-check">✓</div>
     </button>`).join("");
 }
- 
+
+const AVATARS_OPC = [
+  "img/avatar-auto.png",
+  "img/avatar-flor.png",
+  "img/avatar-peces.png",
+  "img/avatar-vaquita.png",
+  "img/avatar-zapatillas.png",
+  "img/avatar-zapatos.png",
+];
+
+function iniciarAvatarGrid() {
+  document.getElementById("avatar-grid").innerHTML = AVATARS_OPC.map(src => `
+    <button class="avatar-swatch" style="background-image:url('${src}')" onclick="elegirAvatar('${src}')">
+      <div class="portada-check">✓</div>
+    </button>`).join("");
+}
+
+function abrirModalAvatar() {
+  document.querySelectorAll(".avatar-swatch").forEach((sw, i) => {
+    sw.classList.toggle("sel", AVATARS_OPC[i] === editorDraft.photo);
+  });
+  document.getElementById("modal-avatar").classList.add("visible");
+}
+
+function elegirAvatar(src) {
+  editorDraft.photo = src;
+  const av = document.getElementById("av-editor");
+  av.style.background = "transparent";
+  av.innerHTML = `<img src="${src}"/>`;
+  document.getElementById("btn-quitar-foto").style.display = "block";
+  cerrarModalAvatar();
+}
+
+function cerrarModalAvatar() {
+  document.getElementById("modal-avatar").classList.remove("visible");
+}
+
+function cerrarModalAvatarSiOverlay(e) {
+  if (e.target === document.getElementById("modal-avatar")) cerrarModalAvatar();
+}
+
 function abrirModalPortada() {
   // marcar la activa
   document.querySelectorAll(".portada-swatch").forEach((sw, i) => {
