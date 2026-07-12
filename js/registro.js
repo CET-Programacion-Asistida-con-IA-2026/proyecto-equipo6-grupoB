@@ -213,6 +213,12 @@ localStorage.setItem('ecotramaUsuarioActual', JSON.stringify(usuario));
 // Actualizar el navbar inmediatamente
 renderAuthUI();
 
+// Si estamos en el foro, sincronizar la usuaria activa sin necesitar refresh
+if (typeof cargarUsuariaLogueada === "function") {
+  cargarUsuariaLogueada();
+  if (typeof renderAvComposer === "function") renderAvComposer();
+}
+
   // Mostrar pantalla de gracias
   error.textContent = '';
   document.getElementById('reg-thanks-name').textContent = nombre;
@@ -252,8 +258,15 @@ function iniciarSesion() {
     JSON.stringify(usuario)
   );
 
-  error.textContent = '';
+ error.textContent = '';
   renderAuthUI();
+
+  // Si estamos en el foro, sincronizar la usuaria activa sin necesitar refresh
+  if (typeof cargarUsuariaLogueada === "function") {
+    cargarUsuariaLogueada();
+    if (typeof renderAvComposer === "function") renderAvComposer();
+  }
+
   cerrarRegistro();
 }
 
