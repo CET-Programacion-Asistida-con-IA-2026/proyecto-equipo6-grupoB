@@ -26,20 +26,6 @@ const PORTADAS_OPC = [
  
 const ROLES_OPC = ["Compradora","Vendedora","Reparadora","Donante"];
  
-const ECO_CONSEJOS = [
-  { icon:"💧", texto:"Producir un jean consume 7.500 litros de agua. ¡Repararlo es la mejor opción!" },
-  { icon:"♻️", texto:"El 85% de la ropa termina en basurales. Donar o intercambiar hace una diferencia enorme." },
-  { icon:"🌿", texto:"Las telas sintéticas tardan 200 años en degradarse. Preferí fibras naturales." },
-  { icon:"👗", texto:"Usar una prenda 30 veces en vez de 3 reduce su huella ambiental un 400%." },
-  { icon:"🧵", texto:"Antes de tirar, preguntate: ¿se puede reparar? Un botón nuevo puede salvarla." },
-  { icon:"🌍", texto:"La moda es la segunda industria más contaminante del mundo." },
-  { icon:"🛍️", texto:"En una feria americana encontrás prendas únicas y ayudás al planeta." },
-  { icon:"🌱", texto:"Cada prenda reutilizada evita kilos de CO₂ en la atmósfera." },
-  { icon:"✂️", texto:"El upcycling convierte prendas viejas en algo nuevo y único." },
-  { icon:"🤝", texto:"Las cooperativas textiles crean trabajo digno y sostenible." },
-  { icon:"💚", texto:"¡Cada pequeña acción cuenta! Juntas tejemos un futuro más sostenible." },
-];
- 
 const POSTS_INICIALES = [
   { id:1, uid:"celes",     tipo:"texto",  texto:"¡Empezamos EcoTrama con todo! 🌿 Esta comunidad nació del amor por la moda consciente y las ganas de cambiar el mundo desde el placard.", tiempo:"1h",  likes:47, liked:false, compartidos:12, compartido:false, coms:[{uid:"maia",t:"¡Te banco con todo! 🌿"},{uid:"khaterine",t:"EcoTrama para siempre 🌸"}] },
   { id:2, uid:"maia",      tipo:"texto",  texto:"Tip 🧵 Antes de tirar ese jean roto, pensá: ¿se puede convertir en algo nuevo? Yo transformé tres en bolsos y una falda.", tiempo:"2h",  likes:38, liked:false, compartidos:8,  compartido:false, coms:[{uid:"flor",t:"Hice lo mismo con una campera! 🪡"},{uid:"cami",t:"Pasame el tutorial plisss 😍"}] },
@@ -62,7 +48,6 @@ let editorDraft    = {};
    INIT
 ════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded", () => {
-  ecoIdx = Math.floor(Math.random() * ECO_CONSEJOS.length);
   cargarUsuariaLogueada();
   renderAvComposer();
   renderPosts();
@@ -149,28 +134,6 @@ function leerImagen(file, cb) {
 /* ════════════════════════════════════════
    SELECTOR DE USUARIA
 ════════════════════════════════════════ */
-function poblarSelector() {
-  const sel = document.getElementById("sel-usuario");
-  USUARIAS.forEach(u => {
-    const o = document.createElement("option");
-    o.value = u.id; o.textContent = u.nombre;
-    sel.appendChild(o);
-  });
-}
- 
-function cambiarUsuario(id) {
-  usuarioActivo = id;
-  renderAvTopbar();
-  renderAvComposer();
-  if (tabActual === "logros") renderLogros();
-}
- 
-function renderAvTopbar() {
-  const el = document.getElementById("av-topbar");
-  el.style.width = "24px"; el.style.height = "24px"; el.style.fontSize = "9px";
-  setAvEl(el, getUser(usuarioActivo));
-}
- 
 function renderAvComposer() {
   const el = document.getElementById("av-composer");
   el.style.width = "42px"; el.style.height = "42px"; el.style.fontSize = "15px";
@@ -207,6 +170,11 @@ function verPerfil(uid) {
 }
  
 function verMiPerfil() {
+  const logueada = localStorage.getItem('ecotramaUsuarioActual');
+  if (!logueada) {
+    if (typeof abrirRegistro === "function") abrirRegistro();
+    return;
+  }
   verPerfil(usuarioActivo);
   document.getElementById("nav-perfil").classList.add("activo");
 }
